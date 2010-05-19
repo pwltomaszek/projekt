@@ -77,7 +77,7 @@ public:
     protected:
         HurtowniaProto( const QString &nazwa, const QString &regon, const QString &ulica, const QString &miejscowosc,
                    const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
-                   float upust = 0 )
+                   const QString &login, const QString &haslo, float upust = 0 )
         {
             this->nazwa = nazwa;
             this->REGON = regon;
@@ -88,22 +88,28 @@ public:
             this->fax = fax;
             this->email = email;
             this->upust = upust;
+            this->login = login;
+            this->haslo = haslo;
         }
 
         HurtowniaProto() {}
 
     public:
-        QString nazwa, REGON, ulica, miejscowosc, kodPocztowy, telefon, fax, email;
+        QString nazwa, REGON, ulica, miejscowosc, kodPocztowy, telefon, fax, email, login, haslo;
         float upust;
     };
 
     struct Hurtownia : public HurtowniaProto, Rekord {
         Hurtownia( const QString &nazwa, const QString &regon, const QString &ulica, const QString &miejscowosc,
                    const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
+                   const QString &login, const QString &haslo, const QString &host,
                    float upust = 0, unsigned int id = 0 )
-                       : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax, email, upust ),
+                       : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon,
+                                         fax, email, login, haslo, upust ),
                          Rekord( "Hurtownia", id )
-        {}
+        {
+            this->host = host;
+        }
 
         Hurtownia( const QSqlQuery &query )
             : Rekord( "Hurtownia", query.value( 0 ).toUInt() )
@@ -117,11 +123,14 @@ public:
             fax = query.value( polaBazy.indexOf( "fax" ) ).toString();
             email = query.value( polaBazy.indexOf( "email" ) ).toString();
             upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
+            login = query.value( polaBazy.indexOf( "login" ) ).toString();
+            haslo = query.value( polaBazy.indexOf( "haslo" ) ).toString();
+            host = query.value( polaBazy.indexOf( "host" ) ).toString();
             id = query.value( polaBazy.indexOf( "id" ) ).toUInt();
         }
 
         QString wartosci() const {
-            return QString( "%1, %2, %3, %4, %5, %6, %7, %8, %9" )
+            return QString( "%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12" )
                     .arg( nawiasy( REGON ) )
                     .arg( nawiasy( nazwa ) )
                     .arg( liczbaNaString( upust ) )
@@ -130,14 +139,20 @@ public:
                     .arg( nawiasy( kodPocztowy ) )
                     .arg( nawiasy( telefon ) )
                     .arg( nawiasy( fax ) )
-                    .arg( nawiasy( email ) );
+                    .arg( nawiasy( email ) )
+                    .arg( nawiasy( login ) )
+                    .arg( nawiasy( haslo ) )
+                    .arg( nawiasy( host ) );
         }
+
+        QString host;
 
         static QString tabela;
         static QStringList polaBazy;
 
         enum PoleBazy {
-            Id, Regon, Nazwa, Upust, Ulica, Miejscowosc, KodPocztowy, Telefon, Fax, Email
+            Id, Regon, Nazwa, Upust, Ulica, Miejscowosc, KodPocztowy, Telefon, Fax, Email,
+            Login, Haslo, Host
         };
     };
 
@@ -147,12 +162,9 @@ public:
                const QString &fax, const QString &email, const QString &login,
                const QString &haslo, float upust = 0, unsigned int id = 0 )
                    : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax,
-                                     email, upust ),
+                                     email, login, haslo, upust ),
                      Rekord( "Sklep", id )
-        {
-            this->login = login;
-            this->haslo = haslo;
-        }
+        {}
 
         Sklep( const QSqlQuery &query )
             : Rekord( "Sklep", query.value( 0 ).toUInt() )

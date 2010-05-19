@@ -1,6 +1,6 @@
 #include "dbproxy.h"
 
-QStringList DBProxy::Hurtownia::polaBazy = QString( "id, regon, nazwa, upust, ulica, miejscowosc, kodPocztowy, telefon, fax, email" ).split( ", ");
+QStringList DBProxy::Hurtownia::polaBazy = QString( "id, regon, nazwa, upust, ulica, miejscowosc, kodPocztowy, telefon, fax, email, login, haslo, host" ).split( ", ");
 QStringList DBProxy::Sklep::polaBazy = QString( "id, regon, nazwa, upust, login, haslo, ulica, miejscowosc, kodPocztowy, telefon, fax, email" ).split( ", " );
 QStringList DBProxy::TowarHurtownia::polaBazy = QString( "id, nazwa, opis, cena, ilosc, vat" ).split( ", " );
 QStringList DBProxy::TowarSklep::polaBazy = QString( "id, nazwa, opis, cena, ilosc, idKategorii, vat, cenaZakupu" ).split( ", " );
