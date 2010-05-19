@@ -1,4 +1,4 @@
-﻿SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 # zmienione kodowanie na UTF-8
 # zmienione atrybuty: `vat`, `regon`
@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS `Sklep` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `Kategoria` (
+  `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `nazwa` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `Towar` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `nazwa` varchar(50) NOT NULL,
@@ -31,12 +37,6 @@ CREATE TABLE IF NOT EXISTS `Towar` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `Kategoria` (
-  `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `nazwa` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `Zamowienie` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `idSklepu` int(8) unsigned NOT NULL,
@@ -48,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `Zamowienie` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (idSklepu) REFERENCES Sklep(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `Pozycja_zamowienia` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
