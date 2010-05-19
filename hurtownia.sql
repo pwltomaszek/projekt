@@ -26,8 +26,15 @@ CREATE TABLE IF NOT EXISTS `Towar` (
   `cena` float NOT NULL,
   `ilosc` int(11) NOT NULL,
   `vat` enum('0','3','7','14','22') NOT NULL,
+  FOREIGN KEY (idKategorii) REFERENCES Kategoria(id),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `Kategoria` (
+  `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `nazwa` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `Zamowienie` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
