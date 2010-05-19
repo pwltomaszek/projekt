@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>12</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -86,6 +86,27 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>login</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_20">
+              <property name="text">
+               <string>haslo</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_56">
+              <property name="text">
+               <string>host</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QLabel" name="label_10">
               <property name="text">
                <string>upust</string>
@@ -119,6 +140,15 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_8"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_10"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_11"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_12"/>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_9"/>

@@ -2,6 +2,8 @@
 
 #include "dbproxy.h"
 
+using namespace DBProxyNS;
+
 int main( int argc, char *argv[] ) {
     QApplication app( argc, argv );
 
@@ -33,10 +35,10 @@ int main( int argc, char *argv[] ) {
         qDebug() << pracownik.posada;
     }
 
-    FiltrSklep filtrMaciek;
-    filtrMaciek.insert( DBProxy::Sklep::Nazwa, DBProxy::Filtr( "123456789" ) );
-    QList< DBProxy::Sklep > mod = db.pobierz< DBProxy::Sklep >( filtrMaciek );
-    qDebug() << mod.size();
+//    FiltrSklep filtrMaciek;
+//    filtrMaciek.insert( DBProxy::Sklep::Nazwa, DBProxy::Filtr( "123456789" ) );
+//    QList< DBProxy::Sklep > mod = db.pobierz< DBProxy::Sklep >( filtrMaciek );
+//    qDebug() << mod.size();
 
     return app.exec();
 }

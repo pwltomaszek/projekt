@@ -200,7 +200,6 @@ public:
 
         static QString tabela;
         static QStringList polaBazy;
-        QString login, haslo;
 
         enum PoleBazy {
             Id, Regon, Nazwa, Upust, Login, Haslo, Ulica, Miejscowosc, KodPocztowy, Telefon, Fax, Email

@@ -67,6 +67,9 @@ void MainWindow::on_pushButton_clicked()
                                   ui->lineEdit_6->text(),
                                   ui->lineEdit_7->text(),
                                   ui->lineEdit_8->text(),
+                                  ui->lineEdit_10->text(),
+                                  ui->lineEdit_11->text(),
+                                  ui->lineEdit_12->text(),
                                   ui->lineEdit_9->text().toFloat() );
     unsigned int id;
     if( ( id = db->dodaj( hurtownia ) ) != 0 )
