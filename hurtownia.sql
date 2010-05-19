@@ -25,8 +25,9 @@ CREATE TABLE IF NOT EXISTS `Towar` (
   `opis` varchar(150) DEFAULT NULL,
   `cena` float NOT NULL,
   `ilosc` int(11) NOT NULL,
-  `vat` enum('0','3','7','14','22') NOT NULL,
+  `idKategorii` int(8) unsigned NOT NULL,
   FOREIGN KEY (idKategorii) REFERENCES Kategoria(id),
+  `vat` enum('0','3','7','14','22') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
