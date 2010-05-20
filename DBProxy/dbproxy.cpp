@@ -2,7 +2,7 @@
 
 QStringList DBProxy::Hurtownia::polaBazy = QString( "id, regon, nazwa, upust, ulica, miejscowosc, kodPocztowy, telefon, fax, email, login, haslo, host" ).split( ", ");
 QStringList DBProxy::Sklep::polaBazy = QString( "id, regon, nazwa, upust, login, haslo, ulica, miejscowosc, kodPocztowy, telefon, fax, email" ).split( ", " );
-QStringList DBProxy::TowarHurtownia::polaBazy = QString( "id, nazwa, opis, cena, ilosc, vat" ).split( ", " );
+QStringList DBProxy::TowarHurtownia::polaBazy = QString( "id, nazwa, opis, cena, ilosc, vat, idKategorii" ).split( ", " );
 QStringList DBProxy::TowarSklep::polaBazy = QString( "id, nazwa, opis, cena, ilosc, idKategorii, vat, cenaZakupu" ).split( ", " );
 QStringList DBProxy::PozycjaZamowienia::polaBazy = QString( "id, idZamowienia, idTowaru, ilosc" ).split( ", " );
 QStringList DBProxy::PozycjaSprzedazy::polaBazy = QString( "id, idSprzedazy, idTowaru, ilosc, cena, vat" ).split( ", " );
@@ -11,7 +11,7 @@ QStringList DBProxy::ZamowienieSklep::polaBazy = QString( "id, idHurtowni, dataZ
 QStringList DBProxy::Sprzedaz::polaBazy = QString( "id, dataRealizacji, status, potwierdzenie, nrParagonu, idFaktury, idKlienta, idPracownika" ).split( ", " );
 QStringList DBProxy::Faktura::polaBazy = QString( "id, nrFaktury" ).split( ", " );
 QStringList DBProxy::Kategoria::polaBazy = QString( "id, nazwa" ).split( ", " );
-QStringList DBProxy::Klient::polaBazy = QString( "id, regon, ulica, miejscowosc, kodPocztowy, telefon, nazwa" ).split( ", " );
+QStringList DBProxy::Klient::polaBazy = QString( "id, regon, ulica, miejscowosc, kodPocztowy, telefon, nazwa, email" ).split( ", " );
 QStringList DBProxy::Pracownik::polaBazy = QString( "id, nazwa, pesel, nip, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email, haslo" ).split( ", " );
 
 QStringList DBProxy::Rekord::polaUInt = QStringList() << "id" << "ilosc" << "idKategorii" << "idZamowienia"

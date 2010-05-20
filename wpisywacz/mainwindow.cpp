@@ -29,9 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
         // pozycja zamowienia jest w sklepie i hurtowni
         ui->tabWidget->setTabEnabled( 4, true );
+        ui->tabWidget->setTabEnabled( 10, true );
     }
-
-
 
     db = new DBProxy( this, host, baza, login, haslo );
 
@@ -121,7 +120,8 @@ void MainWindow::on_pushButton_5_clicked()
                                    ui->lineEdit_33->text(),
                                    ui->lineEdit_34->text().toUInt(),
                                    ui->lineEdit_35->text().toFloat(),
-                                   (DBProxy::StawkaVAT)ui->lineEdit_36->text().toInt() );
+                                   (DBProxy::StawkaVAT)ui->lineEdit_36->text().toInt(),
+                                   ui->lineEdit_52->text().toUInt() );
 
     unsigned int id;
     if( ( id = db->dodaj( towar ) ) != 0 )

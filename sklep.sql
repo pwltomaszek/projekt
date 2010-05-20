@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `Klient` (
   `kodPocztowy` varchar(5) NOT NULL,
   `telefon` varchar(9) NOT NULL,
   `nazwa` varchar(30) NOT NULL,
+  `email` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

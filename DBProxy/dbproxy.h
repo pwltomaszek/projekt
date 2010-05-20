@@ -208,18 +208,21 @@ public:
 
     struct Towar {
     protected:
-        Towar( const QString &nazwa, const QString &opis, size_t ilosc, float cena, StawkaVAT vat )
+        Towar( const QString &nazwa, const QString &opis, size_t ilosc, float cena, StawkaVAT vat,
+               unsigned int idKategorii )
         {
             this->nazwa = nazwa;
             this->opis = opis;
             this->ilosc = ilosc;
             this->cena = cena;
             this->vat = vat;
+            this->idKategorii = idKategorii;
         }
 
         Towar() {}
 
     public:
+        unsigned int idKategorii;
         QString nazwa, opis;
         size_t ilosc;
         float cena;
@@ -228,8 +231,8 @@ public:
 
     struct TowarHurtownia : public Towar, Rekord {
         TowarHurtownia( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
-                        StawkaVAT vat, unsigned int id = 0 )
-                            : Towar( nazwa, opis, ilosc, cena, vat ),
+                        StawkaVAT vat, unsigned int idKategorii, unsigned int id = 0 )
+                            : Towar( nazwa, opis, ilosc, cena, vat, idKategorii ),
                               Rekord( "Towar", id )
         {}
 
@@ -241,33 +244,34 @@ public:
             ilosc = query.value( polaBazy.indexOf( "ilosc" ) ).toUInt();
             cena = query.value( polaBazy.indexOf( "cena" ) ).toFloat();
             vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
+            idKategorii = query.value( polaBazy.indexOf( "idKategorii" ) ).toUInt();
         }
 
         QString wartosci() const {
-            return QString( "%1, %2, %3, %4, %5" )
+            return QString( "%1, %2, %3, %4, %5, %6" )
                         .arg( nawiasy( nazwa ) )
                         .arg( nawiasy( opis ) )
                         .arg( liczbaNaString( cena ) )
                         .arg( liczbaNaString( ilosc ) )
-                        .arg( nawiasy( liczbaNaString( vat ) ) );
+                        .arg( nawiasy( liczbaNaString( vat ) ) )
+                        .arg( liczbaNaString( idKategorii ) );
         }
 
         static QString tabela;
         static QStringList polaBazy;
 
         enum PoleBazy {
-            Id, Nazwa, Opis, Cena, Ilosc, VAT
+            Id, Nazwa, Opis, Cena, Ilosc, VAT, IdKategorii
         };
     };
 
     struct TowarSklep : public Towar, Rekord {
         TowarSklep( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
                     StawkaVAT vat, float cenaZakupu, unsigned int idKategorii, unsigned int id = 0 )
-                            : Towar( nazwa, opis, ilosc, cena, vat ),
+                            : Towar( nazwa, opis, ilosc, cena, vat, idKategorii ),
                               Rekord( "Towar", id )
         {
             this->cenaZakupu = cenaZakupu;
-            this->idKategorii = idKategorii;
         }
 
         TowarSklep( const QSqlQuery &query )

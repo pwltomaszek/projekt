@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>10</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -394,6 +394,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QLabel" name="label_57">
+              <property name="text">
+               <string>idKategorii</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -412,6 +419,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_36"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_52"/>
             </item>
            </layout>
           </item>
