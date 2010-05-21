@@ -2,6 +2,12 @@
 <ui version="4.0">
  <class>Sklep</class>
  <widget class="QMainWindow" name="Sklep">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,6 +15,12 @@
     <width>253</width>
     <height>295</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Sklep</string>
@@ -66,6 +78,15 @@
          <height>21</height>
         </rect>
        </property>
+       <property name="inputMask">
+        <string/>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
       </widget>
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
@@ -103,17 +124,9 @@
      <x>0</x>
      <y>0</y>
      <width>253</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="enabled">

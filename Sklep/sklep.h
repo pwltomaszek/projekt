@@ -8,21 +8,24 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 
+
 #include "sprzedawca.h"
 #include "kierownik.h"
-#include "zamawiajacy.h"
+#include "logowanieh.h"
+//#include "magazynier.h"
 #include "../DBProxy/dbproxy.h"
 
+class Sprzedawca;
 
 namespace Ui {
     class Sklep;
 }
 
-class Sklep : public QMainWindow {
+class OknoSklep : public QMainWindow {
     Q_OBJECT
 public:
-    Sklep(QWidget *parent = 0);
-    ~Sklep();
+    OknoSklep(QWidget *parent = 0);
+    ~OknoSklep();
 
 protected:
     void changeEvent(QEvent *e);
@@ -30,8 +33,8 @@ protected:
 private:
     Ui::Sklep *ui;
 
-
-    DBProxy baza;
+public:
+    DBProxy db;
 
     QString posadaLogowanie;
     QString osobaLogowanie;
@@ -42,6 +45,9 @@ private slots:
     void on_listWidget_itemClicked(QListWidgetItem* item);
     void on_pushButton_clicked();
     void on_comboBox_currentIndexChanged(QString );
+
+friend class Sprzedawca;
+
 };
 
 #endif // SKLEP_H
