@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'magazynier.ui'
 **
-** Created: Fri 21. May 17:03:08 2010
+** Created: Fri 21. May 19:21:44 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -217,7 +217,7 @@ public:
         pushButton->setGeometry(QRect(610, 410, 101, 23));
         label_2 = new QLabel(tab);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(540, 460, 241, 31));
+        label_2->setGeometry(QRect(540, 460, 241, 61));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -234,7 +234,7 @@ public:
         tableView_2->setGeometry(QRect(10, 20, 491, 281));
         label = new QLabel(tab_2);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(540, 40, 251, 16));
+        label->setGeometry(QRect(540, 40, 251, 101));
         tabWidget->addTab(tab_2, QString());
 
         retranslateUi(Magazynier);
@@ -252,7 +252,7 @@ public:
         buttonDodaj->setText(QApplication::translate("Magazynier", "Dodaj", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("Magazynier", "Opis:", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("Magazynier", "ilo\305\233\304\207 sztuk:", 0, QApplication::UnicodeUTF8));
-        labelNazwa->setText(QApplication::translate("Magazynier", "Logitech M305", 0, QApplication::UnicodeUTF8));
+        labelNazwa->setText(QString());
         plainTextEdit->setPlainText(QString());
         label_6->setText(QApplication::translate("Magazynier", "Cena:", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("Magazynier", "Razem:", 0, QApplication::UnicodeUTF8));

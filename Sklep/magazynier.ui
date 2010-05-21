@@ -112,7 +112,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Logitech M305</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPlainTextEdit" name="plainTextEdit">
@@ -767,7 +767,7 @@
        <x>540</x>
        <y>460</y>
        <width>241</width>
-       <height>31</height>
+       <height>61</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -814,7 +814,7 @@
        <x>540</x>
        <y>40</y>
        <width>251</width>
-       <height>16</height>
+       <height>101</height>
       </rect>
      </property>
      <property name="text">

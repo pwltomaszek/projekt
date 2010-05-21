@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `Hurtownia` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `Kategoria` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
   `nazwa` varchar(50) NOT NULL,

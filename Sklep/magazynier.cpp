@@ -126,28 +126,33 @@ QString Magazynier::razemWybrane(){
     return DBProxy::liczbaNaString( razem );
 }
 
-void Magazynier::on_buttonDodaj_clicked()
+void Magazynier::on_buttonDodaj_clicked()       //dodawanie do listy
 {
-    bool czyTowarWybrany = false;
+    if ( ui->labelNazwa->text() == "")
+        QMessageBox::warning( this, "!", "Najpierw zaznacz towar do dodania.", QMessageBox::Ok);
+    else
+    {
+        bool czyTowarWybrany = false;
 
-    foreach( DBProxy::TowarHurtownia towar, wybraneTowaryH){
-        if ( towar.id == towaryH[ui->tableView->currentIndex().row()].id ){
-            czyTowarWybrany = true;
-            break;
+        foreach( DBProxy::TowarHurtownia towar, wybraneTowaryH){
+            if ( towar.id == towaryH[ui->tableView->currentIndex().row()].id ){
+                czyTowarWybrany = true;                
+                break;
+            }
         }
-    }
 
-    if ( czyTowarWybrany )
-        QMessageBox::information(  this, "!", "Towar znajdujê siê ju¿ na liœcie wybranych towarów.", QMessageBox::Ok );
-    else{
-        wybraneTowaryH.append( towaryH[ ui->tableView->currentIndex().row() ] );
-        wybraneTowaryH.last().ilosc = ui->spinBox->value();;
-        wyswietlWybraneTowary();
-        ui->labelRazemWybrane_2->setText( razemWybrane() );
+        if ( czyTowarWybrany )
+            QMessageBox::information(  this, "!", "Towar znajdujê siê ju¿ na liœcie wybranych towarów.", QMessageBox::Ok );
+        else{
+            wybraneTowaryH.append( towaryH[ ui->tableView->currentIndex().row() ] );
+            wybraneTowaryH.last().ilosc = ui->spinBox->value();
+            wyswietlWybraneTowary();
+            ui->labelRazemWybrane_2->setText( razemWybrane() );
+        }
     }
 }
 
-void Magazynier::on_buttonCzysc_2_clicked()
+void Magazynier::on_buttonCzysc_2_clicked()     //czyszczenie listy
 {
     unsigned int ret = QMessageBox::question( this, "?",
                                               "Czy na pewno chcesz wyczyœciæ listê zamówionych towarów?",
@@ -164,7 +169,7 @@ void Magazynier::on_buttonCzysc_2_clicked()
 }
 
 
-void Magazynier::on_buttonUsun_2_clicked()
+void Magazynier::on_buttonUsun_2_clicked()  //usuwanie towaru z listy
 {
     int ind = ui->widokWybraneTowary_2->currentIndex().row();
 
@@ -187,17 +192,30 @@ void Magazynier::on_buttonUsun_2_clicked()
 
 void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 {
-    ZamowienieHurtownia zh( sklep.first().id, QDate::currentDate(), "" );
-    dbH.dodaj( zh );
-
-    for(int i=0; i<wybraneTowaryH.length(); i++)
+    if( wybraneTowaryH.isEmpty() )
+        QMessageBox::warning( this, "!", "Puste zamówienie.", QMessageBox::Ok);
+    else
     {
-        PozycjaZamowienia pz( wybraneTowaryH[i].id, wybraneTowaryH[i].ilosc, dbH.pobierz< ZamowienieHurtownia >().last().id );
-        dbH.dodaj( pz );
+        ZamowienieHurtownia zh( sklep.first().id, QDate::currentDate(), "" );
+        dbH.dodaj( zh );
+
+        for(int i=0; i<wybraneTowaryH.length(); i++)
+        {
+            PozycjaZamowienia pz( wybraneTowaryH[i].id, wybraneTowaryH[i].ilosc, dbH.pobierz< ZamowienieHurtownia >().last().id );
+            dbH.dodaj( pz );
+        }
+
+        ui->label_2->setWordWrap( true );
+        ui->label_2->setText( "Zamówienie zosta³o z³o¿one. <br /> Status realizacji zamówienia spradzisz w drugim tabie." );
+
+        model_2.clear();            //czyszczenie listy
+        wybraneTowaryH.clear();
+        ui->labelRazemWybrane_2->setText( "0" );
+        ui->widokWybraneTowary_2->setModel( &model_2 );
     }
 
-    ui->label_2->setWordWrap( true );
-    ui->label_2->setText( "Zamówienie zosta³o z³o¿one. <br /> Status realizacji zamówienia spradzisz w drugim tabie." );
+    pobierzZamowienia(); //odswieza liste w drugim tabie
+    // uaktualnij()  //uaktualnia ilosc towarow
 }
 
 
@@ -244,7 +262,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 
      if ( zamowieniaH[idx].status == DBProxy::Oczekujace ){
         ui->label->setWordWrap( true );
-        ui->label->setText( "Zamówienie z³o¿one. <br />Czekaj na reakcjê Hurtowni" );
+        ui->label->setText( "Zamówienie z³o¿one. <br />Czekaj na reakcjê Hurtowni." );
      }
      else{
          ui->buttonDodaj->setEnabled( true );
