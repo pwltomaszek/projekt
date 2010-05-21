@@ -22,7 +22,10 @@ public:
     ~Magazynier();
     float upust;
     QList< Sklep > sklep;
+    QList< TowarSklep > towaryS;
     QList< TowarHurtownia > towaryH;
+    QList< TowarHurtownia > towaryHA;  //towary z hurtowni do aktualizacji w sklepie
+    ZamowienieHurtownia zamowienieH;  //konkretne zamowienie do aktualizacji
     QList< Kategoria > kH;
     QList< ZamowienieHurtownia > zamowieniaH;
     QList< TowarHurtownia > wybraneTowaryH;
@@ -36,6 +39,7 @@ protected:
 
 
 private slots:
+    void on_pushButton_2_clicked();
     void on_tableView_2_clicked(QModelIndex index);
     void on_pushButton_clicked();
     void on_buttonUsun_2_clicked();

@@ -253,27 +253,39 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
      ui->tableView_2->setColumnWidth( 3, 80 );
      ui->tableView_2->setColumnWidth( 4, 80 );
      ui->tableView_2->setColumnWidth( 5, 80 );
+
+     ui->groupBox_5->setDisabled( true );
  }
 
- void Magazynier::on_tableView_2_clicked(QModelIndex index)    //po kliknieciu w towar...
+ void Magazynier::on_tableView_2_clicked(QModelIndex index)    //po kliknieciu w zamowienie...
  {
-     int idx = index.row();
-     ui->tableView_2->selectRow( idx );
 
-     if ( zamowieniaH[idx].status == DBProxy::Oczekujace ){
-        ui->label->setWordWrap( true );
+    int idx = index.row();
+    ui->tableView_2->selectRow( idx );
+    ui->label->setWordWrap( true );
+
+    if ( zamowieniaH[idx].status == DBProxy::Oczekujace ){
         ui->label->setText( "Zamówienie z³o¿one. <br />Czekaj na reakcjê Hurtowni." );
-     }
-     else{
-         ui->buttonDodaj->setEnabled( true );
-         ui->labelCzyDostepny->setText( "" );
-         ui->spinBox->setEnabled( true );
-         ui->spinBox->setValue( 1 );
-         ui->spinBox->setMaximum( towaryH[idx].ilosc );
-     }
+    }
+    else if( zamowieniaH[idx].status == DBProxy::Anulowane ){
+        ui->label->setText( "Zamówienie anulowane przez Hurtowniê." );
+    }
+    else if( zamowieniaH[idx].status == DBProxy::Zrealizowane ){
+        ui->label->setText( "Po odebraniu towaru, zaktualizuj go w bazie sklepu" );
+        ui->groupBox_5->setEnabled( true );
+        zamowienieH = zamowieniaH[idx];
+    }
 
-     ui->labelNazwa->setText( towaryH[idx].nazwa );
-     ui->plainTextEdit->setPlainText( towaryH[idx].opis );
-     ui->labelCena->setText( DBProxy::liczbaNaString( towaryH[idx].cena - towaryH[idx].cena * upust) );
-     ui->labelRazem->setText( DBProxy::liczbaNaString( towaryH[idx].cena - towaryH[idx].cena * upust) );
  }
+
+void Magazynier::on_pushButton_2_clicked()      //aktualizacja cen
+{
+    //QMultiMap< DBProxy::TowarHurtownia::PoleBazy, DBProxy::Filtr > filtr;
+    //filtr.insert( DBProxy::TowarHurtownia::Id, DBProxy::Filtr( zamowieniaH[idx].id , DBProxy::Rowne ) );
+ /*/
+    int idZamowienia = zamowienieH[0].id;
+    qDebug()<<idZamowienia; /*/
+    //towaryHA = (dbH.pobierz< ZamowienieHurtownia >()).;
+    //towaryS = dbH.pobierz< TowarSklep >();
+   // for(int i=0; i< )
+}

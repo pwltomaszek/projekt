@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'magazynier.ui'
 **
-** Created: Fri 21. May 19:21:44 2010
+** Created: Fri 21. May 20:20:21 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -61,12 +61,15 @@ public:
     QGroupBox *groupBox_2;
     QTableView *tableView_2;
     QLabel *label;
+    QGroupBox *groupBox_5;
+    QPushButton *pushButton_2;
+    QLabel *label_8;
 
     void setupUi(QDialog *Magazynier)
     {
         if (Magazynier->objectName().isEmpty())
             Magazynier->setObjectName(QString::fromUtf8("Magazynier"));
-        Magazynier->resize(1050, 650);
+        Magazynier->resize(830, 650);
         Magazynier->setModal(false);
         tabWidget = new QTabWidget(Magazynier);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
@@ -235,6 +238,15 @@ public:
         label = new QLabel(tab_2);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(540, 40, 251, 101));
+        groupBox_5 = new QGroupBox(tab_2);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setGeometry(QRect(10, 330, 511, 271));
+        pushButton_2 = new QPushButton(groupBox_5);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(370, 20, 91, 23));
+        label_8 = new QLabel(groupBox_5);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setGeometry(QRect(20, 20, 321, 51));
         tabWidget->addTab(tab_2, QString());
 
         retranslateUi(Magazynier);
@@ -271,6 +283,14 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Magazynier", "Sk\305\202adanie zam\303\263wienia", 0, QApplication::UnicodeUTF8));
         groupBox_2->setTitle(QApplication::translate("Magazynier", "Lista zam\303\263wie\305\204", 0, QApplication::UnicodeUTF8));
         label->setText(QString());
+        groupBox_5->setTitle(QApplication::translate("Magazynier", "Aktualizacja bazy sklepu", 0, QApplication::UnicodeUTF8));
+        pushButton_2->setText(QApplication::translate("Magazynier", "Aktualizuj", 0, QApplication::UnicodeUTF8));
+        label_8->setText(QApplication::translate("Magazynier", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Po aktualizacji baza sklepu zostanie update'owana.<br />Do Hurtowni zostanie wys\305\202ane potwierdzenie przyj\304\231cia towaru.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("Magazynier", "Aktualizacja bazy sklepu", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
