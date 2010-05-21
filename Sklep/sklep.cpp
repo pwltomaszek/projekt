@@ -1,26 +1,24 @@
 #include "sklep.h"
 #include "ui_sklep.h"
 
-Sklep::Sklep(QWidget *parent) :
+OknoSklep::OknoSklep(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Sklep),
-    baza( NULL, "localhost", "Sklep", "root", "inutero" )
+    db( NULL, "localhost", "Sklep", "root", "" )
 {
     ui->setupUi(this);
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO8859-2"));
 
-    if( !baza.polacz() )
+
+    if( !db.polacz() )
         qDebug() << "sru";
-
-
 }
 
-Sklep::~Sklep()
+OknoSklep::~OknoSklep()
 {
     delete ui;
 }
 
-void Sklep::changeEvent(QEvent *e)
+void OknoSklep::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
     switch (e->type()) {
@@ -32,7 +30,7 @@ void Sklep::changeEvent(QEvent *e)
     }
 }
 
-void Sklep::on_comboBox_currentIndexChanged( QString posada )
+void OknoSklep::on_comboBox_currentIndexChanged( QString posada )
 {
     posadaLogowanie = posada;
     if( posada == "wybierz" ){
@@ -40,9 +38,12 @@ void Sklep::on_comboBox_currentIndexChanged( QString posada )
         return;
     }
 
-    QMultiMap< DBProxy::Pracownik::PoleBazy, DBProxy::Filtr > filtr;
-    filtr.insert( DBProxy::Pracownik::PosadaPole, DBProxy::Filtr( DBProxy::stringNaPosade( posada ) ) );
-    pracownicy = baza.pobierz< DBProxy::Pracownik >( filtr );
+    DBProxyNS::FiltrPracownik filtr;
+    filtr.insert( DBProxy::Pracownik::PosadaPole,
+                  DBProxy::Filtr( DBProxy::stringNaPosade( posada ) ) );
+    pracownicy = db.pobierz< DBProxy::Pracownik >( filtr );
+
+
 
     ui->listWidget->clear();
     foreach( DBProxy::Pracownik pracownik, pracownicy ) {
@@ -51,7 +52,7 @@ void Sklep::on_comboBox_currentIndexChanged( QString posada )
     }
 }
 
-void Sklep::on_pushButton_clicked()
+void OknoSklep::on_pushButton_clicked()
 {
     QString wpisaneHaslo = ui->lineEdit->text();
 
@@ -75,29 +76,41 @@ void Sklep::on_pushButton_clicked()
         if ( czyHasloPoprawne ){
 
             delete ui->widget;
+            QSettings settings;
 
+            QWidget *widget = 0;
             if ( posadaLogowanie == "Kierownik" ){
-                QWidget *kierownik = new Kierownik( this );
-                ui->centralWidget->layout()->addWidget( kierownik );
+                widget = new Kierownik( this );
+
             }
             else if ( posadaLogowanie == "Sprzedawca" ){
-                QWidget *sprzedawca = new Sprzedawca( this );
-                ui->centralWidget->layout()->addWidget( sprzedawca );
+                widget = new Sprzedawca( this, db );
+
+                QSize size = settings.value( "size", QSize( 1050, 600 ) ).toSize();
+                resize( size );
             }
-            else
-            {
-                QWidget *zamawiajacy = new Zamawiajacy( this );
-                ui->centralWidget->layout()->addWidget( zamawiajacy );
+            else {
+                widget = new LogowanieH( this, db );
+                //QSize size = settings.value( "size", QSize( 1050, 650 ) ).toSize();
+                //resize( size );
             }
+
+            ui->centralWidget->layout()->addWidget( widget );
         }
 
         else
            QMessageBox::information( this, "!", "Wprowadzono b³êdne has³o", QMessageBox::Ok );
     }
+
+    int i=10;
+    unsigned int un;
+    un = i;
+    size_t size;
+    size = i;
 }
 
 
-void Sklep::on_listWidget_itemClicked(QListWidgetItem* item)
+void OknoSklep::on_listWidget_itemClicked(QListWidgetItem* item)
 {
     osobaLogowanie = item->text();
 }

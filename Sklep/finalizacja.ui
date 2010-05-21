@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Finalizacja</class>
+ <widget class="QDialog" name="Finalizacja">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>771</width>
+    <height>491</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>460</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>280</y>
+     <width>271</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>potwierdzenie</string>
+   </property>
+   <widget class="QRadioButton" name="radioButtonParagon">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>82</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>paragon</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButtonFaktura">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>82</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>faktura</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBoxEdycja">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>10</y>
+     <width>271</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Szczegóły</string>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>65</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_55">
+     <item>
+      <widget class="QLabel" name="label_108">
+       <property name="text">
+        <string>regon</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_109">
+       <property name="text">
+        <string>nazwa</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_110">
+       <property name="text">
+        <string>ulica</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_111">
+       <property name="text">
+        <string>miejscowosc</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_112">
+       <property name="text">
+        <string>kodPocztowy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_113">
+       <property name="text">
+        <string>telefon</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_114">
+       <property name="text">
+        <string>email</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>30</y>
+      <width>161</width>
+      <height>178</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_56">
+     <item>
+      <widget class="QLineEdit" name="lineEditRegon"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditNazwa"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditUlica"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditMiejsc"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditKod"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditTelefon"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditEmail"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="buttonAnulujEdycja">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>230</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Anuluj</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonZatwierdz">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>230</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Zatwierdź</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonCzysc">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>230</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Czyść</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBoxKlienci">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>411</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Lista klientów</string>
+   </property>
+   <widget class="QTableView" name="widokKlienci">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>391</width>
+      <height>211</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonDodaj">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Dodaj</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonEdytuj">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>280</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edytuj</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonWybierz">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>280</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wybierz</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="buttonRealizuj">
+   <property name="geometry">
+    <rect>
+     <x>690</x>
+     <y>460</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Realizuj</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonAnulujFinaliz">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>460</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Anuluj</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
