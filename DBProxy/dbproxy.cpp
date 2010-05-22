@@ -122,7 +122,7 @@ QString DBProxy::statusNaString(StatusZamowienia status)
     switch( status ) {
         case Oczekujace:    return "Oczekujace";
         case Anulowane:     return "Anulowane";
-        case DoRealizacji:  return "Do";
+        case DoRealizacji:  return "DoRealizacji";
         case Zrealizowane:  return "Zrealizowane";
         case StatusBlad:
         default:            return QString();
@@ -250,7 +250,7 @@ DBProxy::StatusZamowienia DBProxy::stringNaStatus(const QString &string)
     if( string == "Anulowane" )
         return Anulowane;
 
-    if( string == "Do" )
+    if( string == "DoRealizacji" )
         return DoRealizacji;
 
     if( string == "Zrealizowane" )
