@@ -5,6 +5,11 @@
 #include "../DBProxy/dbproxy.h"
 #include <QStandardItemModel>
 #include <QMessageBox>
+#include <QTableView>
+#include <QList>
+#include <stdlib.h>
+
+
 using namespace DBProxyNS;
 
 namespace Ui {
@@ -18,20 +23,24 @@ private:
     Ui::Magazynier *ui;
 
 public:
-    Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2);
+    Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2, int pId );
     ~Magazynier();
     float upust;
-    QList< Sklep > sklep;
-    QList< TowarSklep > towaryS;
-    QList< TowarHurtownia > towaryH;
-    QList< TowarHurtownia > towaryHA;  //towary z hurtowni do aktualizacji w sklepie
-    ZamowienieHurtownia zamowienieH;  //konkretne zamowienie do aktualizacji
+
+    DBProxy &db, &dbH;
+    Sklep *sklep;
+    Hurtownia *hurtownia;
+    QString login;
+    int sklepId, hurtowniaId, pracownikId;
+    QList< TowarSklep > towaryS;        //towary zlozonego zamowienia; maja byc dodane do bazy sklepu
+    QList< TowarHurtownia > towaryH, towaryHZ;  //HZ - towary hurtowni juz zamowione uzywane w 2. tabie
+    QList< PozycjaZamowienia > pozycjeZamowienia;   //wszystkie pozycje zamowienia danego zlecenia
     QList< Kategoria > kH;
     QList< ZamowienieHurtownia > zamowieniaH;
     QList< TowarHurtownia > wybraneTowaryH;
-    QStandardItemModel model, model_2, model_3;
-    DBProxy &db, &dbH;
-    PozycjaZamowienia *pz;
+    QStandardItemModel model, model_2, model_3, model_4;    
+    QList< TowarHurtownia > towaryHA;  //towary z hurtowni do aktualizacji w sklepie
+    ZamowienieHurtownia *zamowienieH;  //konkretne zamowienie do aktualizacji
 
 protected:
     void changeEvent(QEvent *e);
@@ -39,6 +48,7 @@ protected:
 
 
 private slots:
+    void dane();
     void on_pushButton_2_clicked();
     void on_tableView_2_clicked(QModelIndex index);
     void on_pushButton_clicked();

@@ -17,10 +17,11 @@ private:
 
 
 public:
-    LogowanieH(QWidget *parent, DBProxy &dbproxy);
+    LogowanieH(QWidget *parent, DBProxy &dbproxy, int pracownikId);
     ~LogowanieH();
 
     DBProxy &db, *dbH;
+    int pId;
     QString hurtowniaLogowanie, hurtowniaHost, hurtowniaLogin, hurtowniaHaslo;
     QList< DBProxy::Hurtownia > hurtownie;
 protected:

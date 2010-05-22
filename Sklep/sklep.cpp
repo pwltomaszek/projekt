@@ -57,18 +57,20 @@ void OknoSklep::on_pushButton_clicked()
     QString wpisaneHaslo = ui->lineEdit->text();
 
     if ( osobaLogowanie == "")
-        QMessageBox::information( this, "!", "Musisz wybraæ pracownika", QMessageBox::Ok );
+        QMessageBox::information( this, "!", "Musisz wybra? pracownika", QMessageBox::Ok );
 
-    if ( wpisaneHaslo == "")
-        QMessageBox::information(  this, "!", "Musisz wprowadziæ has³o", QMessageBox::Ok );
+//    if ( wpisaneHaslo == "")
+//        QMessageBox::information(  this, "!", "Musisz wprowadzi? has?o", QMessageBox::Ok );
 
     else {
 
         bool czyHasloPoprawne;
-        foreach( DBProxy::Pracownik pracownik, pracownicy ) {
-                    if ( ( pracownik.nazwa == osobaLogowanie ) && ( pracownik.haslo == wpisaneHaslo ) ){
-                        czyHasloPoprawne = true;
 
+        foreach( DBProxy::Pracownik pracownik, pracownicy ) {
+                    //if ( ( pracownik.nazwa == osobaLogowanie ) && ( pracownik.haslo == wpisaneHaslo ) ){
+                    if ( ( pracownik.nazwa == osobaLogowanie )  ){
+                        czyHasloPoprawne = true;
+                        pracownikId = pracownik.id;
                         break;
                     }
         }
@@ -90,7 +92,7 @@ void OknoSklep::on_pushButton_clicked()
                 resize( size );
             }
             else {
-                widget = new LogowanieH( this, db );
+                widget = new LogowanieH( this, db, pracownikId);
                 //QSize size = settings.value( "size", QSize( 1050, 650 ) ).toSize();
                 //resize( size );
             }
@@ -99,7 +101,7 @@ void OknoSklep::on_pushButton_clicked()
         }
 
         else
-           QMessageBox::information( this, "!", "Wprowadzono b³êdne has³o", QMessageBox::Ok );
+           QMessageBox::information( this, "!", "Wprowadzono b??dne has?o", QMessageBox::Ok );
     }
 
     int i=10;

@@ -36,6 +36,7 @@ private:
 public:
     DBProxy db;
 
+    int pracownikId;
     QString posadaLogowanie;
     QString osobaLogowanie;
     QList< DBProxy::Pracownik > pracownicy;

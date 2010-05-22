@@ -1,16 +1,19 @@
 #include "magazynier.h"
 #include "ui_magazynier.h"
 
-Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2) :
+Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2, int pId) :
     QDialog(parent),
     ui(new Ui::Magazynier),
     db( dbproxy ),
-    dbH( dbproxy2 )
+    dbH( dbproxy2 ),
+    pracownikId( pId )
+    //zamowienieH( NULL ),
+
 {
     ui->setupUi(this);
-
     dbH.polacz();
 
+    dane();
     pobierzDane();
     pobierzZamowienia();
 }
@@ -18,7 +21,7 @@ Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2) :
 Magazynier::~Magazynier()
 {
     delete ui;
-    delete pz;
+    dbH.rozlacz();
 }
 
 void Magazynier::changeEvent(QEvent *e)
@@ -34,13 +37,26 @@ void Magazynier::changeEvent(QEvent *e)
 }
 
 
+void Magazynier::dane()      //inicjuje pewne dane
+{
+    login = dbH.getLogin();
+    FiltrSklep filtrS;
+    FiltrHurtownia filtrH;
+    FiltrPracownik filtrP;
+
+    filtrH.insert( Hurtownia::Login, DBProxy::Filtr( login, DBProxy::Rowne ) );
+    hurtownia = &db.pobierz< Hurtownia >( filtrH ).first();
+    hurtowniaId = hurtownia->id;
+
+    filtrS.insert( Sklep::Login, DBProxy::Filtr( login, DBProxy::Rowne ) );
+    sklep = &dbH.pobierz< Sklep >( filtrS ).first();
+    sklepId = sklep->id;
+}
+
+
 void Magazynier::pobierzDane()      //wyswietla towary hurtowni
 {
-    //QMultiMap< DBProxy::Sklep::PoleBazy, DBProxy::Filtr > filtr;
-    //filtr.insert( DBProxy::Sklep::Login, DBProxy::Filtr( hurtowniaLogin, DBProxy::Rowne ) );
-    sklep = dbH.pobierz< DBProxy::Sklep >();
-
-    upust = sklep.first().upust/100;
+    upust = sklep->upust/100;
     ui->lineEdit_2->setText( DBProxy::liczbaNaString( upust*100 ).append("%") );
 
     towaryH = dbH.pobierz< DBProxy::TowarHurtownia >();
@@ -192,14 +208,28 @@ void Magazynier::on_buttonUsun_2_clicked()  //usuwanie towaru z listy
 
 void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 {
+
     if( wybraneTowaryH.isEmpty() )
         QMessageBox::warning( this, "!", "Puste zamówienie.", QMessageBox::Ok);
     else
     {
-        ZamowienieHurtownia zh( sklep.first().id, QDate::currentDate(), "" );
-        dbH.dodaj( zh );
 
-        for(int i=0; i<wybraneTowaryH.length(); i++)
+        ZamowienieHurtownia zH( sklepId, QDate::currentDate(), "" );
+        dbH.dodaj( zH );
+        int lastId = dbH.pobierz< ZamowienieHurtownia >().last().id;
+
+        QString faktura = QString::number(hurtowniaId)+ "-" + QString::number( lastId );        //sklada sie z: idHurtowni-random
+        dbH.wpiszFakture( lastId , faktura );
+
+        ZamowienieSklep zS( hurtowniaId, pracownikId, QDate::currentDate(), faktura );
+        db.dodaj( zS );
+
+
+        //filtrF.insert( , DBProxy::Filtr( login, DBProxy::Rowne ) );
+
+        
+
+        for(int i=0; i<wybraneTowaryH.length(); i++)    //dodawanie pozycji zamowien do ostatnio dodanego zamowienia
         {
             PozycjaZamowienia pz( wybraneTowaryH[i].id, wybraneTowaryH[i].ilosc, dbH.pobierz< ZamowienieHurtownia >().last().id );
             dbH.dodaj( pz );
@@ -212,10 +242,10 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         wybraneTowaryH.clear();
         ui->labelRazemWybrane_2->setText( "0" );
         ui->widokWybraneTowary_2->setModel( &model_2 );
-    }
 
-    pobierzZamowienia(); //odswieza liste w drugim tabie
-    // uaktualnij()  //uaktualnia ilosc towarow
+        pobierzZamowienia(); //odswieza liste w drugim tabie
+        // uaktualnij()  //uaktualnia ilosc towarow
+    }
 }
 
 
@@ -229,6 +259,14 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
  void Magazynier::pobierzZamowienia()       //lista zamowien
  {
      zamowieniaH = dbH.pobierz< DBProxy::ZamowienieHurtownia >();
+
+//     qDebug() << zamowieniaH[0].status;
+//     qDebug() << zamowieniaH[1].status;
+//     qDebug() << DBProxy::statusNaString( zamowieniaH[0].status );
+     //qDebug() << DBProxy::statusNaString( zamowieniaH[1].status );
+
+     //qDebug() << db.pobierz<ZamowienieSklep>()[2].status;
+     //qDebug() << DBProxy::statusNaString( db.pobierz<ZamowienieSklep>()[2].status );
 
      for (int i = 0; i < zamowieniaH.size(); i++) {
          model_3.setItem( i, 0, new QStandardItem( DBProxy::liczbaNaString( zamowieniaH[i].id ) ) );
@@ -249,9 +287,9 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
      ui->tableView_2->setModel( &model_3 );
      ui->tableView_2->setColumnWidth( 0, 50 );
      ui->tableView_2->setColumnWidth( 1, 80 );
-     ui->tableView_2->setColumnWidth( 2, 80 );
-     ui->tableView_2->setColumnWidth( 3, 80 );
-     ui->tableView_2->setColumnWidth( 4, 80 );
+     ui->tableView_2->setColumnWidth( 2, 100 );
+     ui->tableView_2->setColumnWidth( 3, 100 );
+     ui->tableView_2->setColumnWidth( 4, 50 );
      ui->tableView_2->setColumnWidth( 5, 80 );
 
      ui->groupBox_5->setDisabled( true );
@@ -266,26 +304,102 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 
     if ( zamowieniaH[idx].status == DBProxy::Oczekujace ){
         ui->label->setText( "Zamówienie z³o¿one. <br />Czekaj na reakcjê Hurtowni." );
+        ui->groupBox_5->setDisabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::Anulowane ){
         ui->label->setText( "Zamówienie anulowane przez Hurtowniê." );
+        ui->groupBox_5->setDisabled( true );
+    }
+    else if( zamowieniaH[idx].status == DBProxy::DoRealizacji ){
+        ui->label->setText( "Po odebraniu towaru, zaktualizuj go w bazie sklepu." );
+        ui->groupBox_5->setEnabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::Zrealizowane ){
-        ui->label->setText( "Po odebraniu towaru, zaktualizuj go w bazie sklepu" );
-        ui->groupBox_5->setEnabled( true );
-        zamowienieH = zamowieniaH[idx];
+        ui->label->setText( "Zamówienie zrealizowane" );
+        ui->groupBox_5->setDisabled( true );
     }
 
+    FiltrPozycjaZamowienia filtrPZ;
+    FiltrTowarHurtownia filtrTH;
+
+    filtrPZ.insert( DBProxy::PozycjaZamowienia::IdZamowienia, DBProxy::Filtr( zamowieniaH[idx].id, DBProxy::Rowne ) );
+
+    pozycjeZamowienia = dbH.pobierz< PozycjaZamowienia >( filtrPZ );    
+    foreach (PozycjaZamowienia pZ, pozycjeZamowienia)
+    {
+        filtrTH.insert( DBProxy::TowarHurtownia::Id, DBProxy::Filtr( pZ.idTowaru, DBProxy::Rowne ) );
+    }
+
+    towaryHZ = dbH.pobierz< TowarHurtownia >( filtrTH, DBProxy::OR ); //wszystkie towary danego zamowienia
+    QListIterator< PozycjaZamowienia > itPZ( pozycjeZamowienia );
+
+    //qDebug() << "przed czyszczeniem " << towaryS.length();
+    towaryS.clear();                    //czyszczenie
+    model_4.clear();
+    foreach( TowarHurtownia tH, towaryHZ)
+    {
+        DBProxy::TowarSklep tS( tH.nazwa,
+                                tH.opis,
+                                itPZ.next().ilosc,
+                                tH.cena,
+                                tH.vat,
+                                tH.cena,
+                                 1);  //tH.idKategorii
+        towaryS.append( tS );
+    }
+
+    for (int i = 0; i < towaryS.length(); i++) {                  //blok ustawia tabele
+        model_4.setItem( i, 0, new QStandardItem( towaryS[i].nazwa ) );
+        model_4.setItem( i, 1, new QStandardItem( towaryS[i].opis ) );
+        model_4.setItem( i, 2, new QStandardItem( DBProxy::vatNaString( towaryS[i].vat ) ) );
+        model_4.setItem( i, 3, new QStandardItem( DBProxy::liczbaNaString( towaryS[i].ilosc ) ) );
+        model_4.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( towaryS[i].cena ) ) );
+    }
+    model_4.setHeaderData( 0, Qt::Horizontal, tr( "Nazwa" ) );
+    model_4.setHeaderData( 1, Qt::Horizontal, tr( "Opis" ) );
+    model_4.setHeaderData( 2, Qt::Horizontal, tr( "VAT" ) );
+    model_4.setHeaderData( 3, Qt::Horizontal, tr( "Ilosc" ) );
+    model_4.setHeaderData( 4, Qt::Horizontal, tr( "Cena" ) );
+    ui->tableView_3->setModel( &model_4 );
+    ui->tableView_3->setColumnWidth( 0, 80 );
+    ui->tableView_3->setColumnWidth( 1, 80 );
+    ui->tableView_3->setColumnWidth( 2, 80 );
+    ui->tableView_3->setColumnWidth( 3, 80 );
+    ui->tableView_3->setColumnWidth( 4, 80 );
  }
 
-void Magazynier::on_pushButton_2_clicked()      //aktualizacja cen
+
+
+void Magazynier::on_pushButton_2_clicked()      //aktualizacja bazy sklepu
 {
-    //QMultiMap< DBProxy::TowarHurtownia::PoleBazy, DBProxy::Filtr > filtr;
-    //filtr.insert( DBProxy::TowarHurtownia::Id, DBProxy::Filtr( zamowieniaH[idx].id , DBProxy::Rowne ) );
- /*/
-    int idZamowienia = zamowienieH[0].id;
-    qDebug()<<idZamowienia; /*/
-    //towaryHA = (dbH.pobierz< ZamowienieHurtownia >()).;
-    //towaryS = dbH.pobierz< TowarSklep >();
-   // for(int i=0; i< )
+    QList< TowarSklep > towaryTS;                   //stara lista towarow sklepu
+
+    towaryTS = db.pobierz< TowarSklep >();
+
+    QListIterator< TowarSklep > itTS( towaryTS );
+    foreach ( TowarSklep tS, towaryS)       //dodawanie towarow do bazy sklepu
+    {
+        qDebug()<< "nowy towar do porownania: " << tS.wartosci();
+
+        while ( itTS.hasNext() )
+        {
+            TowarSklep staryT = itTS.next();
+            qDebug()<<staryT.wartosci();
+
+            if( tS.nazwa == staryT.nazwa )       //jesli nazwy towarow sa takie same...
+            {
+                tS.ilosc += staryT.ilosc;
+                db.usunRekord( &staryT );
+                db.dodaj( tS );
+                break;
+            }
+            else                                 //jesli nazwy towarow sa inne...
+            {
+                qDebug() << "dodaje nowy towar " << tS.nazwa;
+                db.dodaj( tS );
+                break;
+            }
+        }
+        itTS.toFront(); // iterator starych towarow ustawiany na poczatek
+    }
 }

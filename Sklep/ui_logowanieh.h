@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'logowanieh.ui'
 **
-** Created: Fri 21. May 12:21:15 2010
+** Created: Sat 22. May 20:07:15 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

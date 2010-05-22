@@ -1,10 +1,11 @@
 #include "logowanieh.h"
 #include "ui_logowanieh.h"
 #include <QMessageBox>
-LogowanieH::LogowanieH(QWidget *parent, DBProxy &dbproxy) :
+LogowanieH::LogowanieH(QWidget *parent, DBProxy &dbproxy, int pracownikId ) :
     QWidget(parent),
     ui(new Ui::LogowanieH),
-    db( dbproxy )
+    db( dbproxy ),
+    pId( pracownikId )
 {
     ui->setupUi(this);
 
@@ -49,15 +50,16 @@ void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
         if ( hurtowniaLogowanie == "")
             QMessageBox::information( this, "!", "Musisz wybraæ hurtownie", QMessageBox::Ok );
 
-        if ( wpisaneHaslo == "")
-            QMessageBox::information(  this, "!", "Musisz wprowadziæ has³o", QMessageBox::Ok );
+//        if ( wpisaneHaslo == "")
+//            QMessageBox::information(  this, "!", "Musisz wprowadziæ has³o", QMessageBox::Ok );
 
         else {
 
             bool czyHasloPoprawne = false;
 
             foreach( DBProxy::Hurtownia hurtownia, hurtownie ) {
-                if ( ( hurtownia.nazwa == hurtowniaLogowanie ) && ( hurtownia.haslo == wpisaneHaslo ) ){
+               // if ( ( hurtownia.nazwa == hurtowniaLogowanie ) && ( hurtownia.haslo == wpisaneHaslo ) ){
+                if ( ( hurtownia.nazwa == hurtowniaLogowanie ) ){
                     hurtowniaHaslo = hurtownia.haslo;
                     hurtowniaLogin = hurtownia.login;
                     hurtowniaHost = hurtownia.host;
@@ -69,7 +71,7 @@ void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
             dbH = new DBProxy( NULL, hurtowniaHost, "Hurtownia", hurtowniaLogin, hurtowniaHaslo );
             dbH->polacz();
             if ( czyHasloPoprawne ){
-                Magazynier *m = new Magazynier( this, db, *dbH); //na stercie
+                Magazynier *m = new Magazynier( this, db, *dbH, pId); //na stercie
                 m->show();
             }
             else

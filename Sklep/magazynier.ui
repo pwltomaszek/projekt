@@ -824,10 +824,10 @@
     <widget class="QGroupBox" name="groupBox_5">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>530</x>
        <y>330</y>
-       <width>511</width>
-       <height>271</height>
+       <width>271</width>
+       <height>261</height>
       </rect>
      </property>
      <property name="title">
@@ -836,8 +836,8 @@
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>20</y>
+        <x>180</x>
+        <y>80</y>
         <width>91</width>
         <height>23</height>
        </rect>
@@ -849,9 +849,9 @@
      <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>20</y>
-        <width>321</width>
+        <width>251</width>
         <height>51</height>
        </rect>
       </property>
@@ -862,6 +862,29 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Po aktualizacji baza sklepu zostanie update'owana.&lt;br /&gt;Do Hurtowni zostanie wysłane potwierdzenie przyjęcia towaru.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>511</width>
+       <height>261</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Lista towarow zamowienia</string>
+     </property>
+     <widget class="QTableView" name="tableView_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>491</width>
+        <height>231</height>
+       </rect>
       </property>
      </widget>
     </widget>
