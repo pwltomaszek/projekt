@@ -1,4 +1,4 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+﻿SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 # zmienione kodowanie na UTF-8
 # zmienione atrybuty: `vat`, `regon`
@@ -18,12 +18,20 @@ CREATE TABLE IF NOT EXISTS `Sklep` (
   `email` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+INSERT INTO `Sklep` (`nazwa`, `upust`, `login`, `haslo`) VALUES
+('Osiv Sklep',5.5, 'osiv', '1');
 
 CREATE TABLE IF NOT EXISTS `Kategoria` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
   `nazwa` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Kategoria` (`nazwa`) VALUES
+('Art. spożywcze'),
+('Sprzęt'),
+('Broń'),
+('Papiernicze');
 
 CREATE TABLE IF NOT EXISTS `Towar` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -33,9 +41,17 @@ CREATE TABLE IF NOT EXISTS `Towar` (
   `ilosc` int(11) NOT NULL,
   `idKategorii` int(8) unsigned NOT NULL,
   FOREIGN KEY (idKategorii) REFERENCES Kategoria(id),
-  `vat` enum('0','3','7','14','22') NOT NULL,
+  `vat` enum('VAT0','VAT3','VAT7','VAT14','VAT22') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `Towar` (`Nazwa`, `opis`, `cena`, `ilosc`, `idKategorii`, `vat`) VALUES
+('Wódka', '0.5L', '22.45', '66', '1', 'VAT7'),
+('Ogórki', '1L', '5', '10', '1', 'VAT22'),
+('Myszka', 'Logitech', '69.50', '8', '2', 'VAT22'),
+('Orzechy', 'Felix', '3', '25', '1', 'VAT22'),
+('Nożyczki', 'Tnix', '7', '63', '4', 'VAT14');
+
 
 CREATE TABLE IF NOT EXISTS `Zamowienie` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -43,11 +59,12 @@ CREATE TABLE IF NOT EXISTS `Zamowienie` (
   `dataZlozenia` date NOT NULL,
   `dataRealizacji` date DEFAULT NULL,
   `upust` float DEFAULT NULL,
-  `status` enum('oczekujace','anulowane','zrealizowane') NOT NULL,
+  `status` enum('Oczekujace','Anulowane','DoRealizacji','Zrealizowane') NOT NULL,
   `nrFaktury` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (idSklepu) REFERENCES Sklep(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 CREATE TABLE IF NOT EXISTS `Pozycja_zamowienia` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,

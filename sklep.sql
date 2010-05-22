@@ -26,11 +26,15 @@ CREATE TABLE IF NOT EXISTS `Hurtownia` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+INSERT INTO `Hurtownia` (`id`, `nazwa`, `login`, `haslo`, `host`) VALUES
+(1, 'Hurtownia 1', 'osiv', 'q', 'localhost');
+
+
+
 CREATE TABLE IF NOT EXISTS `Kategoria` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
   `nazwa` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Kategoria` (`id`, `nazwa`) VALUES
@@ -66,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `Pracownik` (
   `haslo` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+INSERT INTO `Pracownik` (`id`, `nazwa`, `posada`, `haslo`) VALUES
+(66, 'so','Sprzedawca', 'w');
 
 CREATE TABLE IF NOT EXISTS `Towar` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -92,7 +97,7 @@ INSERT INTO `Towar` (`id`, `Nazwa`, `opis`, `cena`, `ilosc`, `idKategorii`, `vat
 CREATE TABLE IF NOT EXISTS `Sprzedaz` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `dataRealizacji` date DEFAULT NULL,
-  `status` enum('oczekujace','anulowane','zrealizowane') NOT NULL,
+  `status` enum('Oczekujace','Anulowane','DoRealizacji','Zrealizowane') NOT NULL,
   `potwierdzenie` enum('paragon','faktura') NOT NULL,
   `nrParagonu` varchar(8) NOT NULL,
   `idFaktury` int(8) unsigned DEFAULT NULL,
@@ -110,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `Zamowienie` (
   `idHurtowni` int(8) unsigned NOT NULL,
   `dataZlozenia` date NOT NULL,
   `dataRealizacji` date DEFAULT NULL,
-  `status` enum('oczekujace','anulowane','zrealizowane') NOT NULL,
+  `status` enum('Oczekujace','Anulowane','DoRealizacji','Zrealizowane') NOT NULL,
   `nrFaktury` varchar(8) DEFAULT NULL,
   `idPracownika` int(8) unsigned NOT NULL,
   FOREIGN KEY (idPracownika) REFERENCES Pracownik(id),
