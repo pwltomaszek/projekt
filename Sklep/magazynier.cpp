@@ -74,7 +74,7 @@ void Magazynier::pobierzDane()      //wyswietla towary hurtowni
     model.setHeaderData( 1, Qt::Horizontal, "Nazwa" );
     model.setHeaderData( 2, Qt::Horizontal, "Opis" );
     model.setHeaderData( 3, Qt::Horizontal, "VAT" );
-    model.setHeaderData( 4, Qt::Horizontal, "IloúÊ" );
+    model.setHeaderData( 4, Qt::Horizontal, "Ilo≈õƒá" );
     model.setHeaderData( 5, Qt::Horizontal, "Cena" );
 
     ui->tableView->setModel( &model );
@@ -94,7 +94,7 @@ void Magazynier::on_tableView_clicked(QModelIndex index)    //po kliknieciu w to
 
     if ( towaryH[idx].ilosc == 0 ){
         ui->spinBox->setDisabled( true );
-        ui->labelCzyDostepny->setText( "TOWAR NIEDOST PNY" );
+        ui->labelCzyDostepny->setText( "TOWAR NIEDOSTƒòPNY" );
         ui->buttonDodaj->setDisabled( true );
     }
     else{
@@ -158,7 +158,7 @@ void Magazynier::on_buttonDodaj_clicked()       //dodawanie do listy
         }
 
         if ( czyTowarWybrany )
-            QMessageBox::information(  this, "!", "Towar znajdujÍ siÍ juø na liúcie wybranych towarÛw.", QMessageBox::Ok );
+            QMessageBox::information(  this, "!", "Towar znajdujƒô siƒô ju≈º na li≈õcie wybranych towar√≥w.", QMessageBox::Ok );
         else{
             wybraneTowaryH.append( towaryH[ ui->tableView->currentIndex().row() ] );
             wybraneTowaryH.last().ilosc = ui->spinBox->value();
@@ -171,7 +171,7 @@ void Magazynier::on_buttonDodaj_clicked()       //dodawanie do listy
 void Magazynier::on_buttonCzysc_2_clicked()     //czyszczenie listy
 {
     unsigned int ret = QMessageBox::question( this, "?",
-                                              "Czy na pewno chcesz wyczyúciÊ listÍ zamÛwionych towarÛw?",
+                                              "Czy na pewno chcesz wyczy≈õciƒá listƒô zam√≥wionych towar√≥w?",
                                               QMessageBox::Yes | QMessageBox::No );
     if ( ret & QMessageBox::Yes ){
         model_2.clear();
@@ -190,11 +190,11 @@ void Magazynier::on_buttonUsun_2_clicked()  //usuwanie towaru z listy
     int ind = ui->widokWybraneTowary_2->currentIndex().row();
 
     if ( ind < 0 ){
-        QMessageBox::warning( this, "!", "Najpierw zaznacz towar do usuniÍcia.", QMessageBox::Ok);
+        QMessageBox::warning( this, "!", "Najpierw zaznacz towar do usuniƒôcia.", QMessageBox::Ok);
     }
 
     else{
-        unsigned int ret = QMessageBox::question( this, "?", "Czy na pewno chcesz usunπÊ wybrany towar?",
+        unsigned int ret = QMessageBox::question( this, "?", "Czy na pewno chcesz usunƒÖƒá wybrany towar?",
                                         QMessageBox::Yes | QMessageBox::No );
         if ( ret & QMessageBox::Yes ){
             wybraneTowaryH.removeAt( ind );
@@ -210,7 +210,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 {
 
     if( wybraneTowaryH.isEmpty() )
-        QMessageBox::warning( this, "!", "Puste zamÛwienie.", QMessageBox::Ok);
+        QMessageBox::warning( this, "!", "Puste zam√≥wienie.", QMessageBox::Ok);
     else
     {
 
@@ -236,7 +236,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         }
 
         ui->label_2->setWordWrap( true );
-        ui->label_2->setText( "ZamÛwienie zosta≥o z≥oøone. <br /> Status realizacji zamÛwienia spradzisz w drugim tabie." );
+        ui->label_2->setText( "Zam√≥wienie zosta≈Ço z≈Ço≈ºone. <br /> Status realizacji zam√≥wienia spradzisz w drugim tabie." );
 
         model_2.clear();            //czyszczenie listy
         wybraneTowaryH.clear();
@@ -279,7 +279,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 
      model_3.setHeaderData( 0, Qt::Horizontal, "Id" );
      model_3.setHeaderData( 1, Qt::Horizontal, "Nr faktury" );
-     model_3.setHeaderData( 2, Qt::Horizontal, "Data z≥oøenia" );
+     model_3.setHeaderData( 2, Qt::Horizontal, "Data z≈Ço≈ºenia" );
      model_3.setHeaderData( 3, Qt::Horizontal, "Data realizacji" );
      model_3.setHeaderData( 4, Qt::Horizontal, "Upust" );
      model_3.setHeaderData( 5, Qt::Horizontal, "Status" );
@@ -303,11 +303,11 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
     ui->label->setWordWrap( true );
 
     if ( zamowieniaH[idx].status == DBProxy::Oczekujace ){
-        ui->label->setText( "ZamÛwienie z≥oøone. <br />Czekaj na reakcjÍ Hurtowni." );
+        ui->label->setText( "Zam√≥wienie z≈Ço≈ºone. <br />Czekaj na reakcjƒô Hurtowni." );
         ui->groupBox_5->setDisabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::Anulowane ){
-        ui->label->setText( "ZamÛwienie anulowane przez HurtowniÍ." );
+        ui->label->setText( "Zam√≥wienie anulowane przez Hurtowniƒô." );
         ui->groupBox_5->setDisabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::DoRealizacji ){
@@ -315,14 +315,15 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         ui->groupBox_5->setEnabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::Zrealizowane ){
-        ui->label->setText( "ZamÛwienie zrealizowane" );
+        ui->label->setText( "Zam√≥wienie zrealizowane" );
         ui->groupBox_5->setDisabled( true );
     }
+    zamowienieH = &zamowieniaH[idx];
 
     FiltrPozycjaZamowienia filtrPZ;
     FiltrTowarHurtownia filtrTH;
 
-    filtrPZ.insert( DBProxy::PozycjaZamowienia::IdZamowienia, DBProxy::Filtr( zamowieniaH[idx].id, DBProxy::Rowne ) );
+    filtrPZ.insert( DBProxy::PozycjaZamowienia::IdZamowienia, DBProxy::Filtr( zamowienieH->id, DBProxy::Rowne ) );
 
     pozycjeZamowienia = dbH.pobierz< PozycjaZamowienia >( filtrPZ );    
     foreach (PozycjaZamowienia pZ, pozycjeZamowienia)
@@ -370,36 +371,31 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 
 
 
-void Magazynier::on_pushButton_2_clicked()      //aktualizacja bazy sklepu
+void Magazynier::on_pushButton_2_clicked()          //aktualizacja bazy sklepu
 {
     QList< TowarSklep > towaryTS;                   //stara lista towarow sklepu
-
     towaryTS = db.pobierz< TowarSklep >();
+    QListIterator< TowarSklep > itTS( towaryTS );   // iterator starych towarow
 
-    QListIterator< TowarSklep > itTS( towaryTS );
-    foreach ( TowarSklep tS, towaryS)       //dodawanie towarow do bazy sklepu
+    foreach ( TowarSklep tS, towaryS)               //dodawanie towarow do bazy sklepu
     {
-        qDebug()<< "nowy towar do porownania: " << tS.wartosci();
-
         while ( itTS.hasNext() )
         {
             TowarSklep staryT = itTS.next();
-            qDebug()<<staryT.wartosci();
 
             if( tS.nazwa == staryT.nazwa )       //jesli nazwy towarow sa takie same...
             {
-                tS.ilosc += staryT.ilosc;
-                db.usunRekord( &staryT );
-                db.dodaj( tS );
+                db.wpiszIlosc( staryT.id, staryT.ilosc + tS.ilosc );
                 break;
             }
-            else                                 //jesli nazwy towarow sa inne...
+            else if ( !itTS.hasNext() )                                 //jesli nazwy towarow sa inne, i juz koniec listy starych towarow...
             {
-                qDebug() << "dodaje nowy towar " << tS.nazwa;
                 db.dodaj( tS );
                 break;
             }
         }
         itTS.toFront(); // iterator starych towarow ustawiany na poczatek
     }
+    dbH.wpiszStatus( zamowienieH->id , DBProxy::Zrealizowane );     //zmiana statusu
+    pobierzZamowienia();        //odswiezanie listy zamowien
 }
