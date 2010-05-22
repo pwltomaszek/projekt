@@ -59,6 +59,15 @@ bool DBProxy::polacz()
     return false;
 }
 
+void DBProxy::rozlacz()
+{
+     db.close();
+}
+QString DBProxy::getLogin()
+{
+    return db.userName();
+}
+
 QVariant DBProxy::execQuery(const QString &queryString, QSqlQuery *argQuery )
 {
     if( dodawanie && mBladDodawaniaRekordu )
@@ -113,7 +122,9 @@ QString DBProxy::statusNaString(StatusZamowienia status)
     switch( status ) {
         case Oczekujace:    return "Oczekujace";
         case Anulowane:     return "Anulowane";
+        case DoRealizacji:  return "Do";
         case Zrealizowane:  return "Zrealizowane";
+        case StatusBlad:
         default:            return QString();
     }
 }
@@ -124,6 +135,7 @@ QString DBProxy::posadaNaString(Posada posada)
         case Kierownik:     return "Kierownik";
         case Sprzedawca:    return "Sprzedawca";
         case Magazynier:    return "Magazynier";
+        case PosadaBlad:
         default:            return QString();
     }
 }
@@ -138,6 +150,7 @@ QString DBProxy::potwierdzenieNaString(Potwierdzenie potwierdzenie)
     switch( potwierdzenie ) {
         case PotwierdzenieParagon:  return "Paragon";
         case PotwierdzenieFaktura:  return "Faktura";
+        case PotwierdzenieBlad:
         default:                    return QString();
     }
 }
@@ -180,9 +193,9 @@ QString DBProxy::vatNaString(StawkaVAT vat)
         case VAT7:  return "VAT7";
         case VAT14:  return "VAT14";
         case VAT22:  return "VAT22";
+        case VATBlad:
+        default:    return QString();
     }
-
-    return QString();
 }
 
 QString DBProxy::relacjaNaString( DBProxy::Relacja relacja){
@@ -201,9 +214,17 @@ DBProxy::StawkaVAT DBProxy::stringNaVat(const QString &string)
 {
     if( string == "VAT0" )
         return VAT0;
+    if( string == "VAT3" )
+        return VAT3;
+    if( string == "VAT7" )
+        return VAT7;
+    if( string == "VAT14" )
+        return VAT14;
+    if( string == "VAT22" )
+        return VAT22;
 
-    // domyœlnie
-    return VAT0;
+    // domy?lnie
+    return VATBlad;
 }
 
 DBProxy::Posada DBProxy::stringNaPosade(const QString &string)
@@ -217,8 +238,8 @@ DBProxy::Posada DBProxy::stringNaPosade(const QString &string)
     if( string == "Magazynier" )
         return Magazynier;
 
-    // domyœlnie
-    return Sprzedawca;
+    // domy?lnie
+    return PosadaBlad;
 }
 
 DBProxy::StatusZamowienia DBProxy::stringNaStatus(const QString &string)
@@ -229,11 +250,14 @@ DBProxy::StatusZamowienia DBProxy::stringNaStatus(const QString &string)
     if( string == "Anulowane" )
         return Anulowane;
 
+    if( string == "Do" )
+        return DoRealizacji;
+
     if( string == "Zrealizowane" )
         return Zrealizowane;
 
-    // domyœlnie
-    return Oczekujace;
+    // domy?lnie
+    return StatusBlad;
 }
 
 DBProxy::Potwierdzenie DBProxy::stringNaPotwierdzenie(const QString &string)
@@ -244,6 +268,6 @@ DBProxy::Potwierdzenie DBProxy::stringNaPotwierdzenie(const QString &string)
     if( string == "Faktura" )
         return PotwierdzenieFaktura;
 
-    // domyœlnie
-    return PotwierdzenieFaktura;
+    // domy?lnie
+    return PotwierdzenieBlad;
 }

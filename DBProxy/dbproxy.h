@@ -16,24 +16,29 @@ public:
         VAT3 = 3,
         VAT7 = 7,
         VAT14 = 14,
-        VAT22 = 22
+        VAT22 = 22,
+        VATBlad
     };
 
     enum StatusZamowienia {
         Oczekujace,
         Anulowane,
-        Zrealizowane
+        DoRealizacji,
+        Zrealizowane,
+        StatusBlad
     };
 
     enum Posada {
         Kierownik,
         Sprzedawca,
-        Magazynier
+        Magazynier,
+        PosadaBlad
     };
 
     enum Potwierdzenie {
         PotwierdzenieParagon,
-        PotwierdzenieFaktura
+        PotwierdzenieFaktura,
+        PotwierdzenieBlad
     };
 
     enum Relacja {
@@ -300,7 +305,7 @@ public:
         static QString tabela;
         static QStringList polaBazy;
         float cenaZakupu;
-        unsigned int idKategorii;
+        //unsigned int idKategorii;
 
         enum PoleBazy {
             Id, Nazwa, Opis, Cena, Ilosc, VAT, CenaZakupu
@@ -405,7 +410,7 @@ public:
             this->status = status;
         }
 
-        // nie dzia³a dla konstruktora bez argumentów (ambigous function call)
+        // nie dzia?a dla konstruktora bez argument?w (ambigous function call)
         Transakcja(int) {}
 
     public:
@@ -736,15 +741,27 @@ public:
                       const QString &login, const QString &pass);
 
     bool polacz();
-
+    void rozlacz();
     void rozpocznijDodawanie();
     void zakonczDodawanie();
+
+    QString getLogin();
 
     template< typename T > unsigned int dodaj( const T& rekord ) {
         QString queryString = QString( "INSERT INTO " + T::tabela + " (" + T::polaBazy.join( ", " ) + ") "
                                        "VALUES (NULL, " + rekord.wartosci() + ");" );
         return execQuery( queryString ).toUInt();
     }
+
+    bool wpiszFakture(int id, const QString &faktura)
+     {
+        //QString queryString = QString( "update zamowienie set nrFaktury = " + faktura + " where(" + T::polaBazy.join( ", " ) + ") "
+          //                             "VALUES (NULL, " + rekord.wartosci() + ");" );
+
+         //QString str = QString("update zamowienie set nrFaktury = ? where id = ?");
+         QString q = QString("UPDATE zamowienie SET nrFaktury = '" + faktura + "' " + "WHERE id = " + liczbaNaString( id ) );
+          return execQuery( q ).toBool();
+     }
 
     template< typename T > QList< T > pobierz( const QMultiMap< typename T::PoleBazy, Filtr > &filtr = QMultiMap< typename T::PoleBazy, Filtr >(),
                                                Dzialanie dzialanie = AND )
@@ -834,15 +851,16 @@ signals:
     void log( QString str );
 
 public slots:
-
-private:
-    QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );    
+public:
     void usunRekord( const Rekord *rekord );
+private:
+    QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );
+
 
     QSqlDatabase db;
 
-    // zarz±dzie maszyn± stanu zwi±zan± z kontrol± b³êdów przy dodawaniu
-    // rekordów do bazy danych
+    // zarz?dzie maszyn? stanu zwi?zan? z kontrol? b??d?w przy dodawaniu
+    // rekord?w do bazy danych
     bool dodawanie;
     bool mBladDodawaniaRekordu;
     QList< Rekord* > aktualnieDodawaneRekordy;
