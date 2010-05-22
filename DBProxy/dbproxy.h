@@ -753,15 +753,21 @@ public:
         return execQuery( queryString ).toUInt();
     }
 
-    bool wpiszFakture(int id, const QString &faktura)
-     {
-        //QString queryString = QString( "update zamowienie set nrFaktury = " + faktura + " where(" + T::polaBazy.join( ", " ) + ") "
-          //                             "VALUES (NULL, " + rekord.wartosci() + ");" );
-
-         //QString str = QString("update zamowienie set nrFaktury = ? where id = ?");
+    bool wpiszFakture(unsigned int id, const QString &faktura)
+    {
          QString q = QString("UPDATE zamowienie SET nrFaktury = '" + faktura + "' " + "WHERE id = " + liczbaNaString( id ) );
-          return execQuery( q ).toBool();
-     }
+         return execQuery( q ).toBool();
+    }
+    bool wpiszIlosc(unsigned int id, const int &ilosc)
+    {
+         QString q = QString("UPDATE towar SET ilosc = '" + liczbaNaString( ilosc ) + "' " + "WHERE id = " + liczbaNaString( id ) );
+         return execQuery( q ).toBool();
+    }
+    bool wpiszStatus(unsigned int &id, StatusZamowienia status)
+    {
+         QString q = QString("UPDATE zamowienie SET status = '" + statusNaString( status ) + "' " + "WHERE id = " + liczbaNaString( id ) );
+         return execQuery( q ).toBool();
+    }
 
     template< typename T > QList< T > pobierz( const QMultiMap< typename T::PoleBazy, Filtr > &filtr = QMultiMap< typename T::PoleBazy, Filtr >(),
                                                Dzialanie dzialanie = AND )
