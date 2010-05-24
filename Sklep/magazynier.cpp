@@ -248,8 +248,8 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         ZamowienieSklep zS( hurtowniaId, pracownikId, QDate::currentDate(), faktura );
         db.dodaj( zS );  
 
-        zH.status = DBProxy::DoRealizacji;      //do wywalenia
-        dbH.uaktualnij( zH );                   //do wywalenia
+        zH.upust = upust;
+        dbH.uaktualnij( zH );
         for(int i=0; i<wybraneTowaryH.length(); i++)    //dodawanie pozycji zamowien do ostatnio dodanego zamowienia
         {
             PozycjaZamowienia pz( wybraneTowaryH[i].id, wybraneTowaryH[i].ilosc, lastId );
@@ -281,14 +281,6 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
  {
      zamowieniaH = dbH.pobierz< DBProxy::ZamowienieHurtownia >();
 
-//     qDebug() << zamowieniaH[0].status;
-//     qDebug() << zamowieniaH[1].status;
-//     qDebug() << DBProxy::statusNaString( zamowieniaH[0].status );
-     //qDebug() << DBProxy::statusNaString( zamowieniaH[1].status );
-
-     //qDebug() << db.pobierz<ZamowienieSklep>()[2].status;
-     //qDebug() << DBProxy::statusNaString( db.pobierz<ZamowienieSklep>()[2].status );
-
      for (int i = 0; i < zamowieniaH.size(); i++) {
          model_3.setItem( i, 0, new QStandardItem( DBProxy::liczbaNaString( zamowieniaH[i].id ) ) );
          model_3.setItem( i, 1, new QStandardItem( zamowieniaH[i].nrFaktury ) );
@@ -308,8 +300,8 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
      ui->tableView_2->setModel( &model_3 );
      ui->tableView_2->setColumnWidth( 0, 50 );
      ui->tableView_2->setColumnWidth( 1, 80 );
-     ui->tableView_2->setColumnWidth( 2, 100 );
-     ui->tableView_2->setColumnWidth( 3, 100 );
+     ui->tableView_2->setColumnWidth( 2, 90 );
+     ui->tableView_2->setColumnWidth( 3, 90 );
      ui->tableView_2->setColumnWidth( 4, 50 );
      ui->tableView_2->setColumnWidth( 5, 80 );
      ui->tableView_2->setEditTriggers( QAbstractItemView::NoEditTriggers);
@@ -333,7 +325,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         ui->groupBox_5->setDisabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::DoRealizacji ){
-        ui->label->setText( "Po odebraniu towaru, zaktualizuj go w bazie sklepu." );
+        ui->label->setText( "Po odebraniu towaru, zrealizuj je." );
         ui->groupBox_5->setEnabled( true );
     }
     else if( zamowieniaH[idx].status == DBProxy::Zrealizowane ){
@@ -389,12 +381,12 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
     model_4.setHeaderData( 4, Qt::Horizontal, tr( "Cena zakupu" ) );
     model_4.setHeaderData( 5, Qt::Horizontal, tr( "Cena * ilosc" ) );
     ui->tableView_3->setModel( &model_4 );
-    ui->tableView_3->setColumnWidth( 0, 40 );
+    ui->tableView_3->setColumnWidth( 0, 80 );
     ui->tableView_3->setColumnWidth( 1, 120 );
-    ui->tableView_3->setColumnWidth( 2, 60 );
-    ui->tableView_3->setColumnWidth( 3, 60 );
-    ui->tableView_3->setColumnWidth( 4, 100 );
-    ui->tableView_3->setColumnWidth( 5, 100 );
+    ui->tableView_3->setColumnWidth( 2, 40 );
+    ui->tableView_3->setColumnWidth( 3, 40 );
+    ui->tableView_3->setColumnWidth( 4, 90 );
+    ui->tableView_3->setColumnWidth( 5, 90 );
     ui->tableView_3->setEditTriggers( QAbstractItemView::NoEditTriggers);
 
     float suma = 0;                     //obliczenie kosztu zamowienia
@@ -408,7 +400,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
 
 
 
-void Magazynier::on_pushButton_2_clicked()          //aktualizacja bazy sklepu
+void Magazynier::on_pushButton_2_clicked()          //realizacja
 {
     QList< TowarSklep > towaryTS;                   //stara lista towarow sklepu
     towaryTS = db.pobierz< TowarSklep >();
@@ -416,29 +408,35 @@ void Magazynier::on_pushButton_2_clicked()          //aktualizacja bazy sklepu
 
     foreach ( TowarSklep tS, towaryS)               //dodawanie towarow do bazy sklepu
     {
-        while ( itTS.hasNext() )
-        {
-            TowarSklep staryT = itTS.next();
-
-            if( tS.nazwa == staryT.nazwa )          //jesli nazwy towarow sa takie same...
+        qDebug()<<DBProxy::vatNaString( tS.vat ) ;
+        if( !towaryTS.isEmpty() )                        //jesli sa stare towary
             {
-                if( tS.cena == staryT.cenaZakupu )  // i ceny tez...
+            while ( itTS.hasNext() )
+            {
+                TowarSklep staryT = itTS.next();
+
+                if( tS.nazwa == staryT.nazwa )          //jesli nazwy towarow sa takie same...
                 {
-                    staryT.ilosc += tS.ilosc;    //tylko zmienia ilosc
-                    db.uaktualnij( staryT );
-                }
-                else
-                    db.dodaj( tS );     //nazwy te same. ceny inne.
+                    if( tS.cena == staryT.cenaZakupu )  // i ceny tez...
+                    {
+                        staryT.ilosc += tS.ilosc;    //tylko zmienia ilosc
+                        db.uaktualnij( staryT );
+                    }
+                    else
+                        db.dodaj( tS );     //nazwy te same. ceny inne.
 
-                break;
+                    break;
+                }
+                else if ( !itTS.hasNext() )                                 //jesli nazwy towarow sa inne, i juz koniec listy starych towarow...
+                {
+                    db.dodaj( tS );
+                    break;
+                }
             }
-            else if ( !itTS.hasNext() )                                 //jesli nazwy towarow sa inne, i juz koniec listy starych towarow...
-            {
-                db.dodaj( tS );
-                break;
-            }
+            itTS.toFront(); // iterator starych towarow ustawiany na poczatek
         }
-        itTS.toFront(); // iterator starych towarow ustawiany na poczatek
+        else
+            db.dodaj( tS );
     }
 
     zamowienieH->status = DBProxy::Zrealizowane;        //zmiana statusu
@@ -484,7 +482,7 @@ void Magazynier::on_pushButton_2_clicked()          //aktualizacja bazy sklepu
     ui->tableView_4->setColumnWidth( 3, 100 );
     ui->tableView_4->setColumnWidth( 4, 90 );
     ui->tableView_4->setColumnWidth( 5, 40 );
-    ui->tableView_4->setColumnWidth( 6, 40 );
+    ui->tableView_4->setColumnWidth( 6, 30 );
     ui->tableView_4->setColumnWidth( 7, 40 );
     ui->tableView_4->setEditTriggers( QAbstractItemView::NoEditTriggers);
 
