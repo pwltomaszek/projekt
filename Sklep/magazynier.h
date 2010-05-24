@@ -33,14 +33,17 @@ public:
     QString login;
     int sklepId, hurtowniaId, pracownikId;
     QList< TowarSklep > towaryS;        //towary zlozonego zamowienia; maja byc dodane do bazy sklepu
+    QList< TowarSklep > towarySS;       //towary sklepu; 3. tab
     QList< TowarHurtownia > towaryH, towaryHZ;  //HZ - towary hurtowni juz zamowione uzywane w 2. tabie
     QList< PozycjaZamowienia > pozycjeZamowienia;   //wszystkie pozycje zamowienia danego zlecenia
     QList< Kategoria > kH;
     QList< ZamowienieHurtownia > zamowieniaH;
     QList< TowarHurtownia > wybraneTowaryH;
-    QStandardItemModel model, model_2, model_3, model_4;    
+    QStandardItemModel model, model_2, model_3, model_4, model_5;
     QList< TowarHurtownia > towaryHA;  //towary z hurtowni do aktualizacji w sklepie
     ZamowienieHurtownia *zamowienieH;  //konkretne zamowienie do aktualizacji
+
+    int idxTowaru;      //do operacji na liscie towarow
 
 protected:
     void changeEvent(QEvent *e);
@@ -48,6 +51,9 @@ protected:
 
 
 private slots:
+    void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();
+    void on_tableView_4_clicked(QModelIndex index);
     void dane();
     void on_pushButton_2_clicked();
     void on_tableView_2_clicked(QModelIndex index);
@@ -60,7 +66,9 @@ private slots:
     void pobierzDane();
     void pobierzZamowienia();
     void wyswietlWybraneTowary();
+    void pobierzTowary();
     QString razemWybrane();
+    QList< TowarSklep > zwrocWykluczone();
 };
 
 #endif // MAGAZYNIER_H

@@ -59,8 +59,8 @@ void OknoSklep::on_pushButton_clicked()
     if ( osobaLogowanie == "")
         QMessageBox::information( this, "!", "Musisz wybra? pracownika", QMessageBox::Ok );
 
-//    if ( wpisaneHaslo == "")
-//        QMessageBox::information(  this, "!", "Musisz wprowadzi? has?o", QMessageBox::Ok );
+    if ( wpisaneHaslo == "")
+        QMessageBox::information(  this, "!", "Musisz wprowadzi? has?o", QMessageBox::Ok );
 
     else {
 

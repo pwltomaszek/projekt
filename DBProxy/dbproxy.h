@@ -42,7 +42,7 @@ public:
     };
 
     enum Relacja {
-        Rowne, Wieksze, WiekszeRowne, Mniejsze, MniejszeRowne, Zawiera
+        Rowne, NieRowne, Wieksze, WiekszeRowne, Mniejsze, MniejszeRowne, Zawiera
     };
 
     enum Dzialanie {
@@ -421,8 +421,8 @@ public:
 
     struct ZamowienieHurtownia : public Transakcja, Rekord {
         ZamowienieHurtownia( unsigned int idSklepu, const QDate dataZlozenia,
-                             const QString &nrFaktury, const QDate dataRealizacji = QDate(), float upust = 0.0,
-                             StatusZamowienia status = Oczekujace, unsigned int id = 0 )
+                             const QString &nrFaktury = QString(), const QDate dataRealizacji = QDate(),
+                             float upust = 0.0, StatusZamowienia status = Oczekujace, unsigned int id = 0 )
                                  : Transakcja( dataRealizacji, upust, status ),
                                    Rekord( "Zamowienie", id )
         {
@@ -747,26 +747,23 @@ public:
 
     QString getLogin();
 
-    template< typename T > unsigned int dodaj( const T& rekord ) {
-        QString queryString = QString( "INSERT INTO " + T::tabela + " (" + T::polaBazy.join( ", " ) + ") "
-                                       "VALUES (NULL, " + rekord.wartosci() + ");" );
-        return execQuery( queryString ).toUInt();
+    template< typename T > bool uaktualnij( const T& rekord ) {
+            QStringList wartosci = rekord.wartosci().split( ", " );
+            for( int i = 0; i < wartosci.size(); ++i ) {
+                wartosci[ i ].prepend( T::polaBazy.at( i + 1 ) + "=" );
+            }
+
+            QString queryString = QString( "UPDATE " + T::tabela + " SET " + wartosci.join( ", " )
+                                           + " WHERE id=" + QString::number( rekord.id ) );
+            return execQuery( queryString, true ).toBool();
     }
 
-    bool wpiszFakture(unsigned int id, const QString &faktura)
-    {
-         QString q = QString("UPDATE zamowienie SET nrFaktury = '" + faktura + "' " + "WHERE id = " + liczbaNaString( id ) );
-         return execQuery( q ).toBool();
-    }
-    bool wpiszIlosc(unsigned int id, const int &ilosc)
-    {
-         QString q = QString("UPDATE towar SET ilosc = '" + liczbaNaString( ilosc ) + "' " + "WHERE id = " + liczbaNaString( id ) );
-         return execQuery( q ).toBool();
-    }
-    bool wpiszStatus(unsigned int &id, StatusZamowienia status)
-    {
-         QString q = QString("UPDATE zamowienie SET status = '" + statusNaString( status ) + "' " + "WHERE id = " + liczbaNaString( id ) );
-         return execQuery( q ).toBool();
+    template< typename T > unsigned int dodaj( T& rekord ) {
+        QString queryString = QString( "INSERT INTO " + T::tabela + " (" + T::polaBazy.join( ", " ) + ") "
+                                       "VALUES (NULL, " + rekord.wartosci() + ");" );
+        unsigned int id = execQuery( queryString ).toUInt();
+        rekord.id = id;
+        return id;
     }
 
     template< typename T > QList< T > pobierz( const QMultiMap< typename T::PoleBazy, Filtr > &filtr = QMultiMap< typename T::PoleBazy, Filtr >(),
@@ -830,7 +827,7 @@ public:
         QSqlQuery query( db );
 
         QList< T > lista;
-        if( execQuery( queryString, &query ).toBool() ) {
+        if( execQuery( queryString, true, &query ).toBool() ) {
             while( query.next() ) {
                 lista.append( T( query ) );
             }
@@ -860,8 +857,7 @@ public slots:
 public:
     void usunRekord( const Rekord *rekord );
 private:
-    QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );
-
+    QVariant execQuery( const QString &queryString, bool zwracajBool = false, QSqlQuery *query = 0 );
 
     QSqlDatabase db;
 
@@ -903,6 +899,8 @@ namespace DBProxyNS {
     typedef DBProxy::Kategoria Kategoria;
     typedef DBProxy::Klient Klient;
     typedef DBProxy::Pracownik Pracownik;
+
+    typedef DBProxy::Filtr Filtr;
 }
 
 Q_DECLARE_METATYPE( DBProxy::Posada );

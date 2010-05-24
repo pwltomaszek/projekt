@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'magazynier.ui'
 **
-** Created: Sat 22. May 20:07:15 2010
+** Created: Mon 24. May 20:29:26 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -64,8 +64,21 @@ public:
     QGroupBox *groupBox_5;
     QPushButton *pushButton_2;
     QLabel *label_8;
+    QLabel *label_14;
+    QLineEdit *lineEdit_3;
     QGroupBox *groupBox_6;
     QTableView *tableView_3;
+    QWidget *tab_3;
+    QGroupBox *groupBox_7;
+    QTableView *tableView_4;
+    QGroupBox *groupBox_8;
+    QPushButton *pushButton_3;
+    QLineEdit *lineEdit;
+    QLabel *label_12;
+    QPushButton *pushButton_4;
+    QLabel *label_10;
+    QLabel *label_13;
+    QLabel *label_11;
 
     void setupUi(QDialog *Magazynier)
     {
@@ -245,10 +258,16 @@ public:
         groupBox_5->setGeometry(QRect(530, 330, 271, 261));
         pushButton_2 = new QPushButton(groupBox_5);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(180, 80, 91, 23));
+        pushButton_2->setGeometry(QRect(130, 220, 131, 23));
         label_8 = new QLabel(groupBox_5);
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(10, 20, 251, 51));
+        label_14 = new QLabel(groupBox_5);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+        label_14->setGeometry(QRect(10, 150, 101, 16));
+        lineEdit_3 = new QLineEdit(groupBox_5);
+        lineEdit_3->setObjectName(QString::fromUtf8("lineEdit_3"));
+        lineEdit_3->setGeometry(QRect(120, 150, 81, 20));
         groupBox_6 = new QGroupBox(tab_2);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 330, 511, 261));
@@ -256,6 +275,39 @@ public:
         tableView_3->setObjectName(QString::fromUtf8("tableView_3"));
         tableView_3->setGeometry(QRect(10, 20, 491, 231));
         tabWidget->addTab(tab_2, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        groupBox_7 = new QGroupBox(tab_3);
+        groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
+        groupBox_7->setGeometry(QRect(10, 10, 521, 591));
+        tableView_4 = new QTableView(groupBox_7);
+        tableView_4->setObjectName(QString::fromUtf8("tableView_4"));
+        tableView_4->setGeometry(QRect(10, 20, 500, 561));
+        groupBox_8 = new QGroupBox(tab_3);
+        groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
+        groupBox_8->setGeometry(QRect(540, 10, 251, 181));
+        pushButton_3 = new QPushButton(groupBox_8);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setGeometry(QRect(160, 60, 81, 23));
+        lineEdit = new QLineEdit(groupBox_8);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(60, 60, 71, 20));
+        label_12 = new QLabel(groupBox_8);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(10, 60, 46, 13));
+        pushButton_4 = new QPushButton(groupBox_8);
+        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        pushButton_4->setGeometry(QRect(160, 120, 81, 23));
+        label_10 = new QLabel(groupBox_8);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(60, 90, 181, 20));
+        label_13 = new QLabel(groupBox_8);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+        label_13->setGeometry(QRect(10, 30, 161, 16));
+        label_11 = new QLabel(groupBox_8);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(60, 150, 181, 20));
+        tabWidget->addTab(tab_3, QString());
 
         retranslateUi(Magazynier);
 
@@ -292,15 +344,26 @@ public:
         groupBox_2->setTitle(QApplication::translate("Magazynier", "Lista zam\303\263wie\305\204", 0, QApplication::UnicodeUTF8));
         label->setText(QString());
         groupBox_5->setTitle(QApplication::translate("Magazynier", "Aktualizacja bazy sklepu", 0, QApplication::UnicodeUTF8));
-        pushButton_2->setText(QApplication::translate("Magazynier", "Aktualizuj", 0, QApplication::UnicodeUTF8));
+        pushButton_2->setText(QApplication::translate("Magazynier", "Realizuj zam\303\263wienie", 0, QApplication::UnicodeUTF8));
         label_8->setText(QApplication::translate("Magazynier", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Po aktualizacji baza sklepu zostanie update'owana.<br />Do Hurtowni zostanie wys\305\202ane potwierdzenie przyj\304\231cia towaru.</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Po realizacji baza sklepu zostanie update'owana.<br />Do Hurtowni zostanie wys\305\202ane potwierdzenie </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">przyj\304\231cia towaru.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
+        label_14->setText(QApplication::translate("Magazynier", "Do zap\305\202aty w sumie:", 0, QApplication::UnicodeUTF8));
         groupBox_6->setTitle(QApplication::translate("Magazynier", "Lista towarow zamowienia", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("Magazynier", "Aktualizacja bazy sklepu", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("Magazynier", "Zarz\304\205dzanie zam\303\263wieniami", 0, QApplication::UnicodeUTF8));
+        groupBox_7->setTitle(QApplication::translate("Magazynier", "Lista towar\303\263w", 0, QApplication::UnicodeUTF8));
+        groupBox_8->setTitle(QApplication::translate("Magazynier", "Operacje", 0, QApplication::UnicodeUTF8));
+        pushButton_3->setText(QApplication::translate("Magazynier", "Aktualizuj", 0, QApplication::UnicodeUTF8));
+        label_12->setText(QApplication::translate("Magazynier", "Cena:", 0, QApplication::UnicodeUTF8));
+        pushButton_4->setText(QApplication::translate("Magazynier", "Usu\305\204 towar", 0, QApplication::UnicodeUTF8));
+        label_10->setText(QApplication::translate("Magazynier", "Komunikat", 0, QApplication::UnicodeUTF8));
+        label_13->setText(QString());
+        label_11->setText(QApplication::translate("Magazynier", "Komunikat", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("Magazynier", "Zarz\304\205dzanie towarami", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

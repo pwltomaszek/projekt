@@ -63,12 +63,13 @@ void DBProxy::rozlacz()
 {
      db.close();
 }
+
 QString DBProxy::getLogin()
 {
     return db.userName();
 }
 
-QVariant DBProxy::execQuery(const QString &queryString, QSqlQuery *argQuery )
+QVariant DBProxy::execQuery(const QString &queryString, bool zwracajBool, QSqlQuery *argQuery )
 {
     if( dodawanie && mBladDodawaniaRekordu )
         return 0;
@@ -85,13 +86,13 @@ QVariant DBProxy::execQuery(const QString &queryString, QSqlQuery *argQuery )
             emit bladDodawaniaRekordu();    // czy przekazywac cos?
         }
 
-        if( query->isSelect() )
+        if( zwracajBool )
             return false;
 
         return 0;
     }
 
-    if( query->isSelect() ) {
+    if( zwracajBool ) {
         if( !argQuery )
             delete query;
 
@@ -201,6 +202,7 @@ QString DBProxy::vatNaString(StawkaVAT vat)
 QString DBProxy::relacjaNaString( DBProxy::Relacja relacja){
     switch( relacja ) {
         case Rowne:         return " = ";
+        case NieRowne:         return " != ";
         case Wieksze:       return " > ";
         case WiekszeRowne:  return " >= ";
         case Mniejsze:      return " < ";

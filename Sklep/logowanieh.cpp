@@ -50,8 +50,8 @@ void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
         if ( hurtowniaLogowanie == "")
             QMessageBox::information( this, "!", "Musisz wybraæ hurtownie", QMessageBox::Ok );
 
-//        if ( wpisaneHaslo == "")
-//            QMessageBox::information(  this, "!", "Musisz wprowadziæ has³o", QMessageBox::Ok );
+        if ( wpisaneHaslo == "")
+            QMessageBox::information(  this, "!", "Musisz wprowadziæ has³o", QMessageBox::Ok );
 
         else {
 
