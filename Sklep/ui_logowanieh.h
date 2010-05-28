@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'logowanieh.ui'
 **
-** Created: Sat 22. May 20:07:15 2010
+** Created: Fri 28. May 13:37:41 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,26 +39,26 @@ public:
         if (LogowanieH->objectName().isEmpty())
             LogowanieH->setObjectName(QString::fromUtf8("LogowanieH"));
         LogowanieH->setWindowModality(Qt::WindowModal);
-        LogowanieH->resize(242, 205);
+        LogowanieH->resize(253, 295);
         groupBox = new QGroupBox(LogowanieH);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(10, 20, 211, 158));
+        groupBox->setGeometry(QRect(0, 0, 221, 161));
         label = new QLabel(groupBox);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(14, 22, 61, 16));
+        label->setGeometry(QRect(20, 30, 61, 16));
         comboBox = new QComboBox(groupBox);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setGeometry(QRect(74, 20, 121, 22));
+        comboBox->setGeometry(QRect(80, 28, 121, 22));
         lineEdit = new QLineEdit(groupBox);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(74, 52, 121, 20));
+        lineEdit->setGeometry(QRect(80, 60, 121, 20));
         lineEdit->setEchoMode(QLineEdit::Password);
         label_2 = new QLabel(groupBox);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(14, 52, 41, 16));
+        label_2->setGeometry(QRect(20, 60, 41, 16));
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(40, 100, 151, 23));
+        pushButton->setGeometry(QRect(40, 110, 151, 23));
 
         retranslateUi(LogowanieH);
 
@@ -68,7 +68,7 @@ public:
     void retranslateUi(QWidget *LogowanieH)
     {
         LogowanieH->setWindowTitle(QApplication::translate("LogowanieH", "Form", 0, QApplication::UnicodeUTF8));
-        groupBox->setTitle(QApplication::translate("LogowanieH", "Logowanie", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("LogowanieH", "Logowanie do hurtowni", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("LogowanieH", "Hurtownia:", 0, QApplication::UnicodeUTF8));
         comboBox->clear();
         comboBox->insertItems(0, QStringList()

@@ -67,6 +67,8 @@ private slots:
     void pobierzZamowienia();
     void wyswietlWybraneTowary();
     void pobierzTowary();
+    void ograniczeniaZnakow();
+    float zaokraglij( float );
     QString razemWybrane();
     QList< TowarSklep > zwrocWykluczone();
 };
