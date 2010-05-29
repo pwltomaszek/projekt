@@ -471,7 +471,7 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
             db.dodaj( tS );
     }
 
-    //zamowienieH->status = DBProxy::Zrealizowane;        //zmiana statusu w hurtowni
+    zamowienieH->status = DBProxy::Zrealizowane;        //zmiana statusu w hurtowni
     zamowienieH->dataRealizacji = QDate::currentDate(); //ustawianie daty w hurtowni
     dbH.uaktualnij( *zamowienieH );
 
