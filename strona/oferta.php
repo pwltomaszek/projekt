@@ -22,7 +22,7 @@
 			while($rowPozycja=mysql_fetch_object($pozycja))
 			{
 				if($rowPozycja->idKategorii == $rowKategoria->id)
-				echo "<dd><a href='javascript:wyswietl($rowPozycja->id, \"$rowPozycja->nazwa\", \"$rowPozycja->opis\", $rowPozycja->cena, $rowPozycja->ilosc, $rowPozycja->vat)'>$rowPozycja->nazwa</a></dd>";
+				echo "<dd><a href='javascript:wyswietl($rowPozycja->id, \"$rowPozycja->nazwa\", \"$rowPozycja->opis\", $rowPozycja->cena, $rowPozycja->ilosc, \"$rowPozycja->vat\")'>$rowPozycja->nazwa</a></dd>";
 			}						
 		}	
 		$i++;

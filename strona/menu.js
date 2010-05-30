@@ -1,5 +1,15 @@
 ﻿function wyswietl(id, nazwa, opis, cena, ilosc, vat)
 {
+	v = 0;
+	switch(vat)
+	{
+		case 'VAT0': v=0; break;
+		case 'VAT3': v=3; break;
+		case 'VAT7': v=7; break;
+		case 'VAT14': v=14; break;
+		case 'VAT22': v=22; break;		
+		default: v=99;
+	}
 	
 	tmp = '<div class="post"><h1 class="title"><p><strong>'+ nazwa +':</strong> <br></p> </h1>'+
 	  '<div class="entry"><table>'+
@@ -7,9 +17,9 @@
 			'<tr><td>--------</td><td></td></tr>'+
 			'<tr><td style="width: 120px;">Numer ID:</td><td>'+id+'</td></tr>'+
 			'<tr><td>Dostępność sztuk:</td><td>'+ilosc+'</td></tr>'+
-			'<tr><td>Cena netto:</td><td>'+format(cena*(100-vat)/100)+' zł</td></tr>'+
-			'<tr><td>Cena brutto:</td><td>'+format(cena)+' zł</td></tr>'+
-			'<tr><td>VAT:</td><td>'+vat+'%</td></tr>'+
+			'<tr><td>Cena netto:</td><td>'+format(cena)+' zł</td></tr>'+
+			'<tr><td>Cena brutto:</td><td>'+format(cena+cena*(v/100))+' zł</td></tr>'+
+			'<tr><td>VAT:</td><td>'+v+'%</td></tr>'+
 		'<table></div></div>';
 	
 	document.getElementById('content').innerHTML = tmp;
