@@ -95,7 +95,7 @@ void Magazynier::pobierzDane()      //wyswietla towary hurtowni(tylko te, ktore 
         model.setItem( i, 0, new QStandardItem( dbH.pobierz< Kategoria >(Kategoria::Id, Filtr(towaryH[i].idKategorii ) ).first().nazwa ) );
         model.setItem( i, 1, new QStandardItem( towaryH[i].nazwa ) );
         model.setItem( i, 2, new QStandardItem( towaryH[i].opis ) );
-        model.setItem( i, 3, new QStandardItem( DBProxy::vatNaString( towaryH[i].vat ) ) );
+        model.setItem( i, 3, new QStandardItem( QString::number( towaryH[i].vat ) + "%" ) );
         model.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( towaryH[i].ilosc ) ) );
         model.setItem( i, 5, new QStandardItem( DBProxy::liczbaNaString( towaryH[i].cena ) ) );
     }
@@ -157,7 +157,7 @@ void Magazynier::wyswietlWybraneTowary(){  //wybrane towary
 
     model_2.setHeaderData( 0, Qt::Horizontal, tr( "Nazwa" ) );
     model_2.setHeaderData( 1, Qt::Horizontal, tr( "Opis" ) );
-    model_2.setHeaderData( 2, Qt::Horizontal, tr( "Ilosc" ) );
+    model_2.setHeaderData( 2, Qt::Horizontal, tr( "Iloœæ" ) );
     model_2.setHeaderData( 3, Qt::Horizontal, tr( "Razem" ) );
 
     ui->widokWybraneTowary_2->setModel( &model_2 );
@@ -391,7 +391,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
                                 tH.opis,
                                 dbH.pobierz< PozycjaZamowienia >( pf ).first().ilosc,
                                 tH.cena,
-                                DBProxy::VAT7,
+                                tH.vat,
                                 zaokraglij( tH.cena - tH.cena * (upust/100) ),
                                 katId);
         towaryS.append( tS );
@@ -401,7 +401,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
     for (int i = 0; i < towaryS.length(); i++) {                  //blok ustawia tabele
         model_4.setItem( i, 0, new QStandardItem( towaryS[i].nazwa ) );
         model_4.setItem( i, 1, new QStandardItem( towaryS[i].opis ) );
-        model_4.setItem( i, 2, new QStandardItem( DBProxy::vatNaString( towaryS[i].vat ) ) );
+        model_4.setItem( i, 2, new QStandardItem( QString::number( towaryS[i].vat ) + "%"  ) );
         model_4.setItem( i, 3, new QStandardItem( DBProxy::liczbaNaString( towaryS[i].ilosc ) ) );
         model_4.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( towaryS[i].cenaZakupu ) ) );
         model_4.setItem( i, 5, new QStandardItem( DBProxy::liczbaNaString( towaryS[i].cenaZakupu * towaryS[i].ilosc) ) );
@@ -411,7 +411,7 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
     model_4.setHeaderData( 2, Qt::Horizontal, tr( "VAT" ) );
     model_4.setHeaderData( 3, Qt::Horizontal, tr( "Iloœæ" ) );
     model_4.setHeaderData( 4, Qt::Horizontal, tr( "Cena zakupu" ) );
-    model_4.setHeaderData( 5, Qt::Horizontal, tr( "Cena * iloœæ" ) );
+    model_4.setHeaderData( 5, Qt::Horizontal, tr( "Wartoœæ zam." ) );
     ui->tableView_3->setModel( &model_4 );
     ui->tableView_3->setColumnWidth( 0, 90 );
     ui->tableView_3->setColumnWidth( 1, 130 );
@@ -500,7 +500,7 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
         model_5.setItem( i, 3, new QStandardItem( towarySS[i].opis ) );
         model_5.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( towarySS[i].cenaZakupu ) ) );
         model_5.setItem( i, 5, new QStandardItem( DBProxy::liczbaNaString( towarySS[i].cena ) ) );
-        model_5.setItem( i, 6, new QStandardItem( DBProxy::vatNaString( towarySS[i].vat ) ) );
+        model_5.setItem( i, 6, new QStandardItem( QString::number( towarySS[i].vat ) + "%"  ) );
         model_5.setItem( i, 7, new QStandardItem( DBProxy::liczbaNaString( towarySS[i].ilosc ) ) );
     }
 
