@@ -10,6 +10,7 @@ Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2, int
     //zamowienieH( NULL ),
 
 {
+
     ui->setupUi(this);
     dbH.polacz();
 
@@ -157,7 +158,7 @@ void Magazynier::wyswietlWybraneTowary(){  //wybrane towary
 
     model_2.setHeaderData( 0, Qt::Horizontal, tr( "Nazwa" ) );
     model_2.setHeaderData( 1, Qt::Horizontal, tr( "Opis" ) );
-    model_2.setHeaderData( 2, Qt::Horizontal, tr( "Iloœæ" ) );
+    model_2.setHeaderData( 2, Qt::Horizontal,  "Iloœæ" );
     model_2.setHeaderData( 3, Qt::Horizontal, tr( "Razem" ) );
 
     ui->widokWybraneTowary_2->setModel( &model_2 );
@@ -170,12 +171,10 @@ void Magazynier::wyswietlWybraneTowary(){  //wybrane towary
 
 QString Magazynier::razemWybrane(){
     float razem = 0;
-    foreach( DBProxy::TowarHurtownia towar, wybraneTowaryH){
-        //razem += ( towar.cena - towar.cena * (upust/100) ) * towar.ilosc;
-    }
+//    foreach( DBProxy::TowarHurtownia towar, wybraneTowaryH){
+//        razem += ( towar.cena - towar.cena * (upust/100) ) * towar.ilosc;
+//    }
     razem = ui->labelRazem->text().toFloat() + ui->labelRazemWybrane_2->text().toFloat();
-    qDebug() << razem;
-    qDebug() << QString::number( razem, 'f', 2 );
     return QString::number( razem, 'f', 2 );
 }
 
@@ -409,9 +408,9 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
     model_4.setHeaderData( 0, Qt::Horizontal, tr( "Nazwa" ) );
     model_4.setHeaderData( 1, Qt::Horizontal, tr( "Opis" ) );
     model_4.setHeaderData( 2, Qt::Horizontal, tr( "VAT" ) );
-    model_4.setHeaderData( 3, Qt::Horizontal, tr( "Iloœæ" ) );
+    model_4.setHeaderData( 3, Qt::Horizontal, "Iloœæ" );
     model_4.setHeaderData( 4, Qt::Horizontal, tr( "Cena zakupu" ) );
-    model_4.setHeaderData( 5, Qt::Horizontal, tr( "Wartoœæ zam." ) );
+    model_4.setHeaderData( 5, Qt::Horizontal, "Wartoœæ zam." );
     ui->tableView_3->setModel( &model_4 );
     ui->tableView_3->setColumnWidth( 0, 90 );
     ui->tableView_3->setColumnWidth( 1, 130 );
@@ -448,7 +447,6 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
 
                 if( tS.nazwa == staryT.nazwa )          //jesli nazwy towarow sa takie same...
                 {
-                    qDebug() <<tS.cenaZakupu << " stary: "<<staryT.cenaZakupu;
                     if( tS.cenaZakupu == staryT.cenaZakupu )  // i ceny tez...
                     {
                         staryT.ilosc += tS.ilosc;    //tylko zmienia ilosc
