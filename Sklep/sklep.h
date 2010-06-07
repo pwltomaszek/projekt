@@ -36,10 +36,11 @@ private:
 public:
     DBProxy db;
 
-    int pracownikId;
+    int idPracownika;
     QString posadaLogowanie;
     QString osobaLogowanie;
     QList< DBProxy::Pracownik > pracownicy;
+
 
 private slots:
 

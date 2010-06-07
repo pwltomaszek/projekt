@@ -18,7 +18,7 @@
 <!-- naglowek -->
 
 <div id="logo">
-	<a href="index.html"><img src="images/logo.jpg" alt="" /></a>
+	<a href="index.php"><img src="images/logo.jpg" alt="" /></a>
 </div>	
 
 <div id="page">
@@ -30,24 +30,19 @@
 				<h2><a id="glowna" href="index.php">STRONA G£ÓWNA</a></h2>
 			</li>			
 			<li>
-				<h2>OFERTA</h2>
+				<h2><a id="oferta" href="index.php">OFERTA</a></h2>
 				<ul>										
 					<dl id="menu0">
-						<?php
-							include 'oferta.php';									
-						?>
-					</dl>		
-					
-					<script type="text/javascript">
-					// <![CDATA[
-					new Menu('menu0');
-					// ]]>
-					</script>										
+					<?php
+						include 'oferta.php';									
+					?>	
+					</dl>							
+									
 				</ul>
 			</li>					
 		</ul>
-	</div>
-	
+	</div>	
+	<!-- srodek-->
 	<!-- srodek-->
 	<div id="content">
 		<div id="kostka"><center><img src="images/kostka.jpg" alt="" width="500" height="250" /></center></div>

@@ -73,6 +73,7 @@ void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
             if ( czyHasloPoprawne ){
                 Magazynier *m = new Magazynier( this, db, *dbH, pId); //na stercie
                 m->show();
+                ui->groupBox->setDisabled( true );
             }
             else
                QMessageBox::information( this, "!", "Wprowadzono b³êdne has³o", QMessageBox::Ok );

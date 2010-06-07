@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>830</width>
-    <height>650</height>
+    <width>826</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,11 +22,11 @@
      <x>9</x>
      <y>10</y>
      <width>811</width>
-     <height>631</height>
+     <height>751</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -628,9 +628,9 @@
      <property name="geometry">
       <rect>
        <x>9</x>
-       <y>350</y>
+       <y>500</y>
        <width>541</width>
-       <height>251</height>
+       <height>221</height>
       </rect>
      </property>
      <property name="title">
@@ -640,7 +640,7 @@
       <property name="geometry">
        <rect>
         <x>360</x>
-        <y>220</y>
+        <y>190</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -653,7 +653,7 @@
       <property name="geometry">
        <rect>
         <x>450</x>
-        <y>220</y>
+        <y>190</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -668,7 +668,7 @@
         <x>10</x>
         <y>20</y>
         <width>520</width>
-        <height>191</height>
+        <height>161</height>
        </rect>
       </property>
      </widget>
@@ -726,9 +726,9 @@
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>350</y>
+       <y>510</y>
        <width>241</width>
-       <height>251</height>
+       <height>211</height>
       </rect>
      </property>
      <property name="title">
@@ -738,8 +738,8 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>210</y>
-        <width>130</width>
+        <y>180</y>
+        <width>120</width>
         <height>23</height>
        </rect>
       </property>
@@ -751,7 +751,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>160</y>
+        <y>130</y>
         <width>111</width>
         <height>16</height>
        </rect>
@@ -764,7 +764,7 @@
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>160</y>
+        <y>130</y>
         <width>81</width>
         <height>20</height>
        </rect>
@@ -787,6 +787,240 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>350</y>
+       <width>791</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Wyszukiwanie</string>
+     </property>
+     <widget class="QComboBox" name="comboBoxSzukanie">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>20</y>
+        <width>101</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Nazwa</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Opis</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="lineEditSzukaj">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>20</y>
+        <width>311</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Szukaj w kolumnie: </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonSzukaj">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>20</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Szukaj</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sortuj według kolumny:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj według kategorii:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxFiltr">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>80</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonFiltrKat">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>80</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonSortRosnaco">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>50</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sortuj rosnąco</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonSortMalejaco">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>50</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sortuj malejąco</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxSort">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>50</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Kategoria</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Nazwa</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Opis</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxOd">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>110</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>100000.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxDo">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>110</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>100000.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonFiltrCena">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>110</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj według ceny:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPokazWszystkich">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>112</y>
+        <width>120</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pokaż wszystko</string>
       </property>
      </widget>
     </widget>
@@ -914,9 +1148,9 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>10</y>
+       <y>80</y>
        <width>241</width>
-       <height>331</height>
+       <height>261</height>
       </rect>
      </property>
      <property name="title">
@@ -936,6 +1170,67 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
+    <widget class="QComboBox" name="comboBoxFiltr_2">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>20</y>
+       <width>181</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Wszystkie</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Oczekujace</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>DoRealizacji</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Zrealizowane</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Anulowane</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_19">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>20</y>
+       <width>51</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pokaż:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="buttonFiltrKat_2">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>50</y>
+       <width>91</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Filtruj</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -947,7 +1242,7 @@ p, li { white-space: pre-wrap; }
        <x>10</x>
        <y>10</y>
        <width>541</width>
-       <height>591</height>
+       <height>561</height>
       </rect>
      </property>
      <property name="title">
@@ -959,7 +1254,7 @@ p, li { white-space: pre-wrap; }
         <x>10</x>
         <y>20</y>
         <width>520</width>
-        <height>561</height>
+        <height>531</height>
        </rect>
       </property>
      </widget>
@@ -1065,7 +1360,254 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
+    <widget class="QGroupBox" name="groupBox_12">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>580</y>
+       <width>791</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Wyszukiwanie</string>
+     </property>
+     <widget class="QComboBox" name="comboBoxSzukanie_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>20</y>
+        <width>101</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Nazwa</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Opis</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="lineEditSzukaj_2">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>20</y>
+        <width>311</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Szukaj w kolumnie: </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonSzukaj_2">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>20</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Szukaj</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sortuj według kolumny:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj według kategorii:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxFiltr_3">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>80</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonFiltrKat_3">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>80</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonSortRosnaco_2">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>50</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sortuj rosnąco</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonSortMalejaco_2">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>50</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sortuj malejąco</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxSort_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>50</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Kategoria</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Nazwa</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Opis</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxOd_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>110</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>100000.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxDo_2">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>110</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>100000.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonFiltrCena_2">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>110</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj według ceny:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPokazWszystkich_2">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>112</y>
+        <width>120</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pokaż wszystko</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_5">
+   <property name="geometry">
+    <rect>
+     <x>604</x>
+     <y>2</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Odśwież listę</string>
+   </property>
   </widget>
  </widget>
  <resources/>

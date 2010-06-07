@@ -23,8 +23,8 @@ public:
     enum StatusZamowienia {
         Oczekujace,
         Anulowane,
-        DoRealizacji,
         Zrealizowane,
+        DoRealizacji,
         StatusBlad
     };
 
@@ -258,7 +258,7 @@ public:
                         .arg( nawiasy( opis ) )
                         .arg( liczbaNaString( cena ) )
                         .arg( liczbaNaString( ilosc ) )
-                        .arg( nawiasy( liczbaNaString( vat ) ) )
+                        .arg( nawiasy( vatNaString( vat ) ) )
                         .arg( liczbaNaString( idKategorii ) );
         }
 
@@ -298,17 +298,16 @@ public:
                         .arg( liczbaNaString( cena ) )
                         .arg( liczbaNaString( ilosc ) )
                         .arg( liczbaNaString( idKategorii ) )
-                        .arg( nawiasy( liczbaNaString( vat ) ) )
+                        .arg( nawiasy( vatNaString( vat ) ) )
                         .arg( liczbaNaString( cenaZakupu ) );
         }
 
         static QString tabela;
         static QStringList polaBazy;
         float cenaZakupu;
-        //unsigned int idKategorii;
 
         enum PoleBazy {
-            Id, Nazwa, Opis, Cena, Ilosc, VAT, CenaZakupu
+            Id, Nazwa, Opis, Cena, Ilosc, IdKategorii, VAT, CenaZakupu
         };
     };
 
@@ -386,7 +385,7 @@ public:
                     .arg( liczbaNaString( idTowaru ) )
                     .arg( liczbaNaString( ilosc ) )
                     .arg( liczbaNaString( cena ) )
-                    .arg( liczbaNaString( vat ) );
+                    .arg( vatNaString( vat ) );
         }
 
         static QString tabela;
@@ -466,7 +465,7 @@ public:
 
     struct ZamowienieSklep : public Transakcja, Rekord {
         ZamowienieSklep( unsigned int idHurtowni, unsigned int idPracownika, const QDate dataZlozenia,
-                         const QString &nrFaktury, const QDate dataRealizacji = QDate(), float upust = 0.0,
+                         const QString &nrFaktury, const QDate dataRealizacji = QDate(),
                          StatusZamowienia status = Oczekujace, unsigned int id = 0 )
             : Transakcja( dataRealizacji, upust, status ),
               Rekord( "Zamowienie", id )
@@ -486,7 +485,6 @@ public:
             dataZlozenia = query.value( polaBazy.indexOf( "dataZlozenia" ) ).toDate();
             nrFaktury = query.value( polaBazy.indexOf( "nrFaktury" ) ).toString();
             dataRealizacji = query.value( polaBazy.indexOf( "dataRealizacji" ) ).toDate();
-            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
             status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
         }
 
@@ -535,7 +533,6 @@ public:
             nrParagonu = query.value( polaBazy.indexOf( "nrParagonu" ) ).toString();
             idFaktury = query.value( polaBazy.indexOf( "idFaktury" ) ).toUInt();
             dataRealizacji = query.value( polaBazy.indexOf( "dataRealizacji" ) ).toDate();
-            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
             status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
             potwierdzenie = stringNaPotwierdzenie( query.value( polaBazy.indexOf( "potwierdzenie" ) ).toString() );
         }
@@ -655,13 +652,14 @@ public:
         }
 
         QString wartosci() const {
-            return QString( "%1, %2, %3, %4, %5, %6" )
+            return QString( "%1, %2, %3, %4, %5, %6, %7" )
                     .arg( nawiasy( regon ) )
                     .arg( nawiasy( ulica ) )
                     .arg( nawiasy( miejscowosc ) )
                     .arg( nawiasy( kodPocztowy ) )
                     .arg( nawiasy( telefon ) )
-                    .arg( nawiasy( nazwa ) );
+                    .arg( nawiasy( nazwa ) )
+                    .arg( nawiasy( email ) );
         }
 
         static QString tabela;
@@ -669,7 +667,7 @@ public:
         QString regon;
 
         enum PoleBazy {
-            Id, Regon, Ulica, Miejscowosc, KodPocztowy, Telefon, Nazwa
+            Id, Regon, Ulica, Miejscowosc, KodPocztowy, Telefon, Nazwa, Email
         };
     };
 
@@ -742,20 +740,41 @@ public:
 
     bool polacz();
     void rozlacz();
+
     void rozpocznijDodawanie();
     void zakonczDodawanie();
 
+    void usunRekord( const Rekord *rekord );
+
     QString getLogin();
 
-    template< typename T > bool uaktualnij( const T& rekord ) {
-            QStringList wartosci = rekord.wartosci().split( ", " );
-            for( int i = 0; i < wartosci.size(); ++i ) {
-                wartosci[ i ].prepend( T::polaBazy.at( i + 1 ) + "=" );
-            }
+//    template< typename T > QMap< int, QString > policz( typename T::PoleBazy pole ) {
+//        QString queryString = QString( "SELECT %1, COUNT(*) FROM %2 GROUP BY %1;" )
+//                                    .arg( T::polaBazy.at( pole ) )
+//                                    .arg( T::tabela);
+//        QSqlQuery query( db );
+//        execQuery( queryString, false, &query );
 
-            QString queryString = QString( "UPDATE " + T::tabela + " SET " + wartosci.join( ", " )
-                                           + " WHERE id=" + QString::number( rekord.id ) );
-            return execQuery( queryString, true ).toBool();
+//        QMap< int, QString > mapa;
+//        while( query.next() ) {
+//            mapa.insert( query.value( 1 ).toInt(), query.value( 0 ).toString() );
+//        }
+
+//        return mapa;
+//    }
+
+    template< typename T > bool uaktualnij( const T& rekord ) {
+        if( rekord.id == 0 )
+            return false;
+
+        QStringList wartosci = rekord.wartosci().split( ", " );
+        for( int i = 0; i < wartosci.size(); ++i ) {
+            wartosci[ i ].prepend( T::polaBazy.at( i + 1 ) + "=" );
+        }
+
+        QString queryString = QString( "UPDATE " + T::tabela + " SET " + wartosci.join( ", " )
+                                        + " WHERE id=" + QString::number( rekord.id ) );
+        return execQuery( queryString, true ).toBool();
     }
 
     template< typename T > unsigned int dodaj( T& rekord ) {
@@ -764,6 +783,13 @@ public:
         unsigned int id = execQuery( queryString ).toUInt();
         rekord.id = id;
         return id;
+    }
+
+    template< typename T > QList< T > pobierz( typename T::PoleBazy pole, Filtr filtr ) {
+        QMultiMap< typename T::PoleBazy, Filtr > filtrMap;
+        filtrMap.insert( pole, filtr );
+
+        return pobierz< T >( filtrMap );
     }
 
     template< typename T > QList< T > pobierz( const QMultiMap< typename T::PoleBazy, Filtr > &filtr = QMultiMap< typename T::PoleBazy, Filtr >(),
@@ -854,11 +880,9 @@ signals:
     void log( QString str );
 
 public slots:
-public:
-    void usunRekord( const Rekord *rekord );
+
 private:
     QVariant execQuery( const QString &queryString, bool zwracajBool = false, QSqlQuery *query = 0 );
-
     QSqlDatabase db;
 
     // zarz?dzie maszyn? stanu zwi?zan? z kontrol? b??d?w przy dodawaniu

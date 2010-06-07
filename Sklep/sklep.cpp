@@ -70,7 +70,7 @@ void OknoSklep::on_pushButton_clicked()
                     //if ( ( pracownik.nazwa == osobaLogowanie ) && ( pracownik.haslo == wpisaneHaslo ) ){
                     if ( ( pracownik.nazwa == osobaLogowanie )  ){
                         czyHasloPoprawne = true;
-                        pracownikId = pracownik.id;
+                        idPracownika = pracownik.id;
                         break;
                     }
         }
@@ -82,17 +82,16 @@ void OknoSklep::on_pushButton_clicked()
 
             QWidget *widget = 0;
             if ( posadaLogowanie == "Kierownik" ){
-                widget = new Kierownik( this );
+                widget = new Kierownik( this, db );
 
             }
             else if ( posadaLogowanie == "Sprzedawca" ){
-                widget = new Sprzedawca( this, db );
-
-                QSize size = settings.value( "size", QSize( 1050, 600 ) ).toSize();
+                widget = new Sprzedawca( this, db, idPracownika );
+                QSize size = settings.value( "size", QSize( 1050, 605 ) ).toSize();
                 resize( size );
             }
             else {
-                widget = new LogowanieH( this, db, pracownikId);
+                widget = new LogowanieH( this, db, idPracownika);
                 //QSize size = settings.value( "size", QSize( 1050, 650 ) ).toSize();
                 //resize( size );
             }

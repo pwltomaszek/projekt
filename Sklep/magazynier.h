@@ -37,11 +37,14 @@ public:
     QList< TowarHurtownia > towaryH, towaryHZ;  //HZ - towary hurtowni juz zamowione uzywane w 2. tabie
     QList< PozycjaZamowienia > pozycjeZamowienia;   //wszystkie pozycje zamowienia danego zlecenia
     QList< Kategoria > kH;
-    QList< ZamowienieHurtownia > zamowieniaH;
+    QList< ZamowienieHurtownia > zamowieniaH, zzz;
     QList< TowarHurtownia > wybraneTowaryH;
+    QList< TowarSklep > stareH;
     QStandardItemModel model, model_2, model_3, model_4, model_5;
     QList< TowarHurtownia > towaryHA;  //towary z hurtowni do aktualizacji w sklepie
     ZamowienieHurtownia *zamowienieH;  //konkretne zamowienie do aktualizacji
+
+    //TowarHurtownia towarH;      //towar sklepu do dodania
 
     int idxTowaru;      //do operacji na liscie towarow
 
@@ -51,6 +54,20 @@ protected:
 
 
 private slots:
+    void on_pushButton_5_clicked();
+    void on_buttonPokazWszystkich_2_clicked();
+    void on_buttonFiltrCena_2_clicked();
+    void on_buttonFiltrKat_3_clicked();
+    void on_buttonSortRosnaco_2_clicked();
+    void on_buttonSortMalejaco_2_clicked();
+    void on_buttonSzukaj_2_clicked();
+    void on_buttonFiltrKat_2_clicked();
+    void on_buttonPokazWszystkich_clicked();
+    void on_buttonFiltrCena_clicked();
+    void on_buttonFiltrKat_clicked();
+    void on_buttonSortRosnaco_clicked();
+    void on_buttonSortMalejaco_clicked();
+    void on_buttonSzukaj_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
     void on_tableView_4_clicked(QModelIndex index);
@@ -63,10 +80,10 @@ private slots:
     void on_buttonDodaj_clicked();
     void on_spinBox_valueChanged(int );
     void on_tableView_clicked(QModelIndex index);
-    void pobierzDane();
-    void pobierzZamowienia();
+    void pobierzDane( QList< TowarHurtownia > );
+    void pobierzZamowienia( QList< ZamowienieHurtownia > );
     void wyswietlWybraneTowary();
-    void pobierzTowary();
+    void pobierzTowary( QList< TowarSklep > );
     void ograniczeniaZnakow();
     float zaokraglij( float );
     QString razemWybrane();
