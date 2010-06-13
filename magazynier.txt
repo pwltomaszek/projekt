@@ -1,0 +1,41 @@
+
+MODU£ MAGAZYNIERA
+
+Uruchomienie
+
+Nale¿y zalogowaæ siê jako Magazynier, wybraæ swój login i wpisaæ has³o. 
+Po poprawnym logowaniu nale¿y wybraæ Hurtowniê, z baz¹ której ma nast¹piæ po³¹czenie, oraz wpisaæ has³o, które udostêpni³a hurtownia.
+
+
+Sk³adanie zamówienia
+
+Panel pozwala na sk³adanie zamówieñ z danej hurtowni. Na ka¿dy towar obowi¹zuje upust, którego wartoœæ wyœwietla siê w prawym górnych rogu panelu.
+Pole „Baza hurtowni” pozwala na przegl¹d wszystkich dostêpnych towarów.
+Pole „Wyszukiwanie” pozwala na kompleksowe sortowanie i wyszukiwanie towarów wg szeregu kryteriów.
+Po klikniêciu w towar, po prawej stronie w polu „Wybrany przedmiot” wyœwietlaj¹ siê szczegó³owe informacje o towarze. W celu dodaniu towaru do listy zamówieñ nale¿y wybraæ iloœæ towaru oraz klikn¹æ przycisk „Dodaj”.
+W razie niemo¿liwoœci dodania towaru, wyœwietli siê na ten temat odpowiednia informacja. Jeœli towar zostanie dodany, trafi on do „Listy wybranych towarów”. W tym panelu mo¿liwe jest usuniêcie konkretnego zamówienia, jak równie¿ wyczyszczenie ca³ej listy zamówienia.
+W celu z³o¿enia zamówienia nale¿y klikn¹æ przycisk „Z³ó¿ zamówienie”. Data z³o¿enia zamówienia przyjmie aktualny dzieñ. Wyœwietli siê stosowna informacja.
+
+
+Zarz¹dzanie zamówieniami
+
+Panel pozwala na podgl¹d statusów zamówieñ oraz ich realizacjê.
+Po klikniêciu w dane zamówienie:
+ - w „Informacje” wyœwietli siê informacja o statusie zamówienia oraz mo¿liwych dzia³aniach ze strony Magazyniera
+ - w „Lista towarów zamówienia” wyœwietli siê szczegó³owa informacja o towarach zamówienia
+ - w „Realizacja zamówienia” wyœwietli siê kwota, na jak¹ opiewa zamówienie
+
+Statusy:
+1.	Oczekuj¹ce – zamówienie zosta³o z³o¿one, czeka na reakcjê ze strony hurtowni.
+2.	DoRealizacji – zamówienie zosta³o przyjête przez hurtowniê. Po odebraniu towaru nale¿y klikn¹æ przycisk „Realizuj zamówienie” w celu zakoñczenia transakcji i automatycznej aktualizacji bazy sklepu.
+3.	Zrealizowane – zamówienie zosta³o zrealizowane. Data realizacji przyjmie aktualny dzieñ.
+4.	Anulowane – zamówienie zosta³o anulowane przez Hurtowniê. W celu wyjaœnienia przyczyny nale¿y siê skontaktowaæ osobiœcie z przedstawicielem Hurtowni.
+
+
+Zarz¹dzanie towarami
+
+Panel pozwala na podgl¹d towarów znajduj¹cych siê w bazie sklepu oraz zmianê ceny ka¿dego towaru.
+Mo¿liwe jest usuniêcie towaru ze sklepu, jeœli iloœæ danego towaru jest zerowa.
+Pole „Wyszukiwanie” pozwala na kompleksowe sortowanie i wyszukiwanie towarów wg szeregu kryteriów.
+Dodatkowo w ka¿dym panelu widoczny jest przycisk „Odœwie¿ listê”, który pobiera aktualne dane towarów Hurtowni, zamówieñ oraz towarów Sklepu.
+
