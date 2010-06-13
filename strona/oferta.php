@@ -17,7 +17,7 @@
 		$tmpa = "";
 		$tmpb = 
 		"<h1 class=title>$rowKategoria->nazwa</h1><br />
-		<table  cellpadding=4 border=1px rules=rows>
+		<table id=tabela cellpadding=4 border=1px rules=rows>
 			<tr>
 				<th>Nazwa</th>
 				<th>Opis</th>

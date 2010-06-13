@@ -29,6 +29,7 @@ Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2, int
     pobierzTowary( towarySS );    
 
     ograniczeniaZnakow();
+    setWindowTitle( "Modu³ magazyniera." );
 }
 
 Magazynier::~Magazynier()

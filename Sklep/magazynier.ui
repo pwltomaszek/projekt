@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -1131,7 +1131,7 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="title">
-      <string>Lista towarow zamowienia</string>
+      <string>Lista towarów zamówienia</string>
      </property>
      <widget class="QTableView" name="tableView_3">
       <property name="geometry">

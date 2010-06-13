@@ -34,12 +34,22 @@ void LogowanieH::changeEvent(QEvent *e)
     }
 }
 
-
-
-
 void LogowanieH::on_comboBox_currentIndexChanged(QString hurtownia)
 {
     hurtowniaLogowanie = hurtownia;
+
+    Hurtownia h = db.pobierz< Hurtownia >( Hurtownia::Nazwa, Filtr( hurtownia ) ).first();
+    ui->lineEdit_2->setText( h.nazwa );
+    ui->lineEdit_4->setText( h.telefon );
+    ui->lineEdit_5->setText( h.fax );
+    ui->lineEdit_6->setText( h.email );
+    ui->lineEdit_7->setText( h.miejscowosc );
+
+    ui->lineEdit_2->setReadOnly( true );
+    ui->lineEdit_4->setReadOnly( true );
+    ui->lineEdit_5->setReadOnly( true );
+    ui->lineEdit_6->setReadOnly( true );
+    ui->lineEdit_7->setReadOnly( true );
 }
 
 void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
@@ -58,8 +68,7 @@ void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
             bool czyHasloPoprawne = false;
 
             foreach( DBProxy::Hurtownia hurtownia, hurtownie ) {
-               // if ( ( hurtownia.nazwa == hurtowniaLogowanie ) && ( hurtownia.haslo == wpisaneHaslo ) ){
-                if ( ( hurtownia.nazwa == hurtowniaLogowanie ) ){
+                if ( ( hurtownia.nazwa == hurtowniaLogowanie ) && ( hurtownia.haslo == wpisaneHaslo ) ){
                     hurtowniaHaslo = hurtownia.haslo;
                     hurtowniaLogin = hurtownia.login;
                     hurtowniaHost = hurtownia.host;
