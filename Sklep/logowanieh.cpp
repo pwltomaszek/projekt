@@ -13,6 +13,13 @@ LogowanieH::LogowanieH(QWidget *parent, DBProxy &dbproxy, int pracownikId ) :
     foreach( DBProxy::Hurtownia hurtownia, hurtownie ) {
         ui->comboBox->addItem( hurtownia.nazwa );
     }
+
+
+    ui->lineEdit_2->setReadOnly( true );
+    ui->lineEdit_4->setReadOnly( true );
+    ui->lineEdit_5->setReadOnly( true );
+    ui->lineEdit_6->setReadOnly( true );
+    ui->lineEdit_7->setReadOnly( true );
 }
 
 
@@ -36,56 +43,54 @@ void LogowanieH::changeEvent(QEvent *e)
 
 void LogowanieH::on_comboBox_currentIndexChanged(QString hurtownia)
 {
-    hurtowniaLogowanie = hurtownia;
+    if ( hurtownia != "wybierz")
+    {
+        hurtowniaLogowanie = hurtownia;
+        Hurtownia h = db.pobierz< Hurtownia >( Hurtownia::Nazwa, Filtr( hurtownia ) ).first();
+        ui->lineEdit_2->setText( h.nazwa );
+        ui->lineEdit_4->setText( h.telefon );
+        ui->lineEdit_5->setText( h.fax );
+        ui->lineEdit_6->setText( h.email );
+        ui->lineEdit_7->setText( h.miejscowosc );
 
-    Hurtownia h = db.pobierz< Hurtownia >( Hurtownia::Nazwa, Filtr( hurtownia ) ).first();
-    ui->lineEdit_2->setText( h.nazwa );
-    ui->lineEdit_4->setText( h.telefon );
-    ui->lineEdit_5->setText( h.fax );
-    ui->lineEdit_6->setText( h.email );
-    ui->lineEdit_7->setText( h.miejscowosc );
+        hurtowniaHaslo = h.haslo;
+    }
+    else
+    {
+        ui->lineEdit_2->setText( QString() );
+        ui->lineEdit_4->setText( QString() );
+        ui->lineEdit_5->setText( QString() );
+        ui->lineEdit_6->setText( QString() );
+        ui->lineEdit_7->setText( QString() );
 
-    ui->lineEdit_2->setReadOnly( true );
-    ui->lineEdit_4->setReadOnly( true );
-    ui->lineEdit_5->setReadOnly( true );
-    ui->lineEdit_6->setReadOnly( true );
-    ui->lineEdit_7->setReadOnly( true );
+        hurtowniaLogowanie = "";
+    }
 }
 
 void LogowanieH::on_pushButton_clicked()    //polacz / rozlacz
 {
-    if( ui->pushButton->text() == "Po³¹cz" ) {
-        QString wpisaneHaslo = ui->lineEdit->text();
+    if( ui->pushButton->text() == "Po³¹cz" ) {        
 
         if ( hurtowniaLogowanie == "")
             QMessageBox::information( this, "!", "Musisz wybraæ hurtownie", QMessageBox::Ok );
-
-        if ( wpisaneHaslo == "")
-            QMessageBox::information(  this, "!", "Musisz wprowadziæ has³o", QMessageBox::Ok );
 
         else {
 
             bool czyHasloPoprawne = false;
 
             foreach( DBProxy::Hurtownia hurtownia, hurtownie ) {
-                if ( ( hurtownia.nazwa == hurtowniaLogowanie ) && ( hurtownia.haslo == wpisaneHaslo ) ){
-                    hurtowniaHaslo = hurtownia.haslo;
+                if ( ( hurtownia.nazwa == hurtowniaLogowanie ) ){
                     hurtowniaLogin = hurtownia.login;
                     hurtowniaHost = hurtownia.host;
-                    czyHasloPoprawne = true;
                     break;
                 }
             }
 
             dbH = new DBProxy( NULL, hurtowniaHost, "Hurtownia", hurtowniaLogin, hurtowniaHaslo );
             dbH->polacz();
-            if ( czyHasloPoprawne ){
                 Magazynier *m = new Magazynier( this, db, *dbH, pId); //na stercie
                 m->show();
                 ui->groupBox->setDisabled( true );
-            }
-            else
-               QMessageBox::information( this, "!", "Wprowadzono b³êdne has³o", QMessageBox::Ok );
         }
     }
     else{

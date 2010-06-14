@@ -28,9 +28,6 @@ Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2, int
     pobierzZamowienia( zamowieniaH );
     pobierzTowary( towarySS );    
 
-    zamowieniaH = dbH.pobierz< ZamowienieHurtownia >();
-    foreach ( ZamowienieHurtownia z, zamowieniaH ){ qDebug()  << "DUPA: "<< z.identyfikacja; }
-
     connect( ui->ostatnieRadioButton, SIGNAL(toggled(bool)),
              ui->iloscSpinBox, SLOT(setEnabled(bool)));
     connect( ui->ostatnieRadioButton, SIGNAL(toggled(bool)),
@@ -88,7 +85,8 @@ void Magazynier::dane()      //inicjuje pewne dane
 
     filtrS.insert( Sklep::Login, DBProxy::Filtr( login, DBProxy::Rowne ) );
     sklep = &dbH.pobierz< Sklep >( filtrS ).first();
-    sklepId = sklep->id;
+    sklepId = sklep->id;    
+
 }
 
 QList< TowarSklep > Magazynier::zwrocWykluczone()
@@ -148,6 +146,13 @@ void Magazynier::pobierzDane( QList<TowarHurtownia> tH )      //wyswietla towary
 
 }
 
+
+
+
+//###########
+//Zamawianie
+//###########
+
 void Magazynier::on_tableView_clicked(QModelIndex index)    //po kliknieciu w towar...
 {
     int idx = index.row();
@@ -203,9 +208,6 @@ void Magazynier::wyswietlWybraneTowary(){  //wybrane towary
 
 QString Magazynier::razemWybrane(){
     float razem = 0;
-//    foreach( DBProxy::TowarHurtownia towar, wybraneTowaryH){
-//        razem += ( towar.cena - towar.cena * (upust/100) ) * towar.ilosc;
-//    }
     razem = ui->labelRazem->text().toFloat() + ui->labelRazemWybrane_2->text().toFloat();
     return QString::number( razem, 'f', 2 );
 }
@@ -234,7 +236,6 @@ void Magazynier::on_buttonDodaj_clicked()       //dodawanie do listy
         else{
             wybraneTowaryH.append( t );
             wybraneTowaryH.last().ilosc = ui->spinBox->value();
-            //wybraneTowaryH.last().cena = zaokraglij( zaokraglij( wybraneTowaryH.last().cena) -  zaokraglij( wybraneTowaryH.last().cena ) * (upust/100) );
             wyswietlWybraneTowary();
             ui->labelRazemWybrane_2->setText( razemWybrane() );
         }
@@ -396,22 +397,6 @@ void Magazynier::on_buttonPokazWszystkich_clicked()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //###########
 //Zarzadzanie zamowieniami
 //###########
@@ -425,8 +410,6 @@ void Magazynier::on_buttonPokazWszystkich_clicked()
          model_3.setItem( i, 3, new QStandardItem( DBProxy::dataNaString( zH[i].dataRealizacji ) ) );
          model_3.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( zH[i].upust ) ) );
          model_3.setItem( i, 5, new QStandardItem( DBProxy::statusNaString( zH[i].status ) ) );
-
-         qDebug() << zH[i].id << "IDENTYFIKACJA " << zH[i].identyfikacja.toLatin1();
      }
 
      model_3.setHeaderData( 0, Qt::Horizontal, "Id" );
@@ -562,7 +545,6 @@ void Magazynier::on_buttonPokazWszystkich_clicked()
  }
 
 
-
 void Magazynier::on_pushButton_2_clicked()          //realizacja
 {
     QList< TowarSklep > towaryTS;                   //stara lista towarow sklepu
@@ -603,11 +585,7 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
     }
 
     zamowienieH->status = DBProxy::Zrealizowane;        //zmiana statusu w hurtowni
-
-    zamowienieH->dataRealizacji = QDate::currentDate(); //ustawianie daty w hurtowni
     dbH.uaktualnij( *zamowienieH );
-
-    qDebug()<< "zamowienieH->identyfikacja  " <<zamowienieH->identyfikacja ;
 
     ZamowienieSklep zamowienieS = db.pobierz< ZamowienieSklep >( ZamowienieSklep::Identyfikacja, Filtr( zamowienieH->identyfikacja ) ).first();
     zamowienieS.status = DBProxy::Zrealizowane;
@@ -634,7 +612,6 @@ void Magazynier::on_buttonFiltrKat_2_clicked()      //filtrowanie
 
 
         if( ui->okresRadioButton->isChecked() ) {
-            qDebug() << "Filtr 1";
             odDate = ui->odDateEdit->date();
             doDate = ui->doDateEdit->date();
 
@@ -843,6 +820,9 @@ void Magazynier::on_buttonPokazWszystkich_2_clicked()
 
 
 
+//###########
+//Inne
+//###########
 
 void Magazynier::on_pushButton_5_clicked()      //odswiez liste
 {
