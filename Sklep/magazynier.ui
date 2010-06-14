@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -80,7 +80,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>ilość sztuk:</string>
+       <string>Ilość sztuk:</string>
       </property>
      </widget>
      <widget class="QSpinBox" name="spinBox">
@@ -634,7 +634,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>Lista wybranych przedmiotów</string>
+      <string>Lista wybranych towarów</string>
      </property>
      <widget class="QPushButton" name="buttonUsun_2">
       <property name="geometry">
@@ -1056,7 +1056,7 @@
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>350</y>
+       <y>470</y>
        <width>241</width>
        <height>251</height>
       </rect>
@@ -1125,7 +1125,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>350</y>
+       <y>470</y>
        <width>541</width>
        <height>251</height>
       </rect>
@@ -1148,9 +1148,9 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>80</y>
+       <y>10</y>
        <width>241</width>
-       <height>261</height>
+       <height>331</height>
       </rect>
      </property>
      <property name="title">
@@ -1170,66 +1170,241 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-    <widget class="QComboBox" name="comboBoxFiltr_2">
+    <widget class="QGroupBox" name="groupBox_13">
      <property name="geometry">
       <rect>
-       <x>620</x>
-       <y>20</y>
-       <width>181</width>
-       <height>22</height>
+       <x>10</x>
+       <y>350</y>
+       <width>791</width>
+       <height>111</height>
       </rect>
      </property>
-     <item>
-      <property name="text">
-       <string>Wszystkie</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Oczekujace</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>DoRealizacji</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Zrealizowane</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Anulowane</string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QLabel" name="label_19">
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>20</y>
-       <width>51</width>
-       <height>16</height>
-      </rect>
+     <property name="title">
+      <string>Filtrowanie</string>
      </property>
-     <property name="text">
-      <string>Pokaż:</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="buttonFiltrKat_2">
-     <property name="geometry">
-      <rect>
-       <x>710</x>
-       <y>50</y>
-       <width>91</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Filtruj</string>
-     </property>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>51</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Status:</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="wszystkieRadioButton">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>20</y>
+        <width>151</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>bez uwzględnienia czasu</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="ostatnieRadioButton">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>50</y>
+        <width>151</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>data złożenia z ostatnich</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="doDateEdit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>470</x>
+        <y>80</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>453</x>
+        <y>80</y>
+        <width>12</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>do</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>470</x>
+        <y>50</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>dni</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>tygodni</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>miesięcy</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="comboBoxFiltr_2">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>20</y>
+        <width>131</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Wszystkie</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Oczekujace</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>DoRealizacji</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Zrealizowane</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Anulowane</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QRadioButton" name="okresRadioButton">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>80</y>
+        <width>151</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>data złożenia z okresu od</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="iloscSpinBox">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>368</x>
+        <y>50</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>500</number>
+      </property>
+      <property name="value">
+       <number>1</number>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="odDateEdit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>368</x>
+        <y>80</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonFiltrKat_2">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>50</y>
+        <width>101</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filtruj</string>
+      </property>
+     </widget>
+     <zorder>label_24</zorder>
+     <zorder>wszystkieRadioButton</zorder>
+     <zorder>ostatnieRadioButton</zorder>
+     <zorder>doDateEdit</zorder>
+     <zorder>label_25</zorder>
+     <zorder>comboBox</zorder>
+     <zorder>comboBoxFiltr_2</zorder>
+     <zorder>okresRadioButton</zorder>
+     <zorder>iloscSpinBox</zorder>
+     <zorder>odDateEdit</zorder>
+     <zorder>buttonFiltrKat_2</zorder>
+     <zorder>label_24</zorder>
+     <zorder>wszystkieRadioButton</zorder>
+     <zorder>ostatnieRadioButton</zorder>
+     <zorder>doDateEdit</zorder>
+     <zorder>label_25</zorder>
+     <zorder>comboBox</zorder>
+     <zorder>comboBoxFiltr_2</zorder>
+     <zorder>okresRadioButton</zorder>
+     <zorder>iloscSpinBox</zorder>
+     <zorder>odDateEdit</zorder>
+     <zorder>buttonFiltrKat_2</zorder>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_3">

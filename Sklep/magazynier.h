@@ -43,7 +43,7 @@ public:
     QStandardItemModel model, model_2, model_3, model_4, model_5;
     QList< TowarHurtownia > towaryHA;  //towary z hurtowni do aktualizacji w sklepie
     ZamowienieHurtownia *zamowienieH;  //konkretne zamowienie do aktualizacji
-
+    QDate odDate, doDate;
     //TowarHurtownia towarH;      //towar sklepu do dodania
 
     int idxTowaru;      //do operacji na liscie towarow

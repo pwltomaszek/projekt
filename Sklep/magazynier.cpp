@@ -28,6 +28,22 @@ Magazynier::Magazynier(QWidget *parent, DBProxy &dbproxy, DBProxy &dbproxy2, int
     pobierzZamowienia( zamowieniaH );
     pobierzTowary( towarySS );    
 
+    zamowieniaH = dbH.pobierz< ZamowienieHurtownia >();
+    foreach ( ZamowienieHurtownia z, zamowieniaH ){ qDebug()  << "DUPA: "<< z.identyfikacja; }
+
+    connect( ui->ostatnieRadioButton, SIGNAL(toggled(bool)),
+             ui->iloscSpinBox, SLOT(setEnabled(bool)));
+    connect( ui->ostatnieRadioButton, SIGNAL(toggled(bool)),
+             ui->comboBox, SLOT(setEnabled(bool)));
+
+    connect( ui->okresRadioButton, SIGNAL(toggled(bool)),
+             ui->odDateEdit, SLOT(setEnabled(bool)));
+    connect( ui->okresRadioButton, SIGNAL(toggled(bool)),
+             ui->doDateEdit, SLOT(setEnabled(bool)));
+
+
+
+
     ograniczeniaZnakow();
     setWindowTitle( "Modu³ magazyniera." );
 }
@@ -54,6 +70,10 @@ void Magazynier::ograniczeniaZnakow()      //ograniczenia dla lineedit'ow
 {
     ui->plainTextEdit->setReadOnly( true );
     ui->lineEdit->setMaxLength( 7 );
+
+    ui->wszystkieRadioButton->setChecked( true );
+    ui->doDateEdit->setDate( QDate::currentDate() );     //ustawianie daty
+
 }
 
 void Magazynier::dane()      //inicjuje pewne dane
@@ -277,10 +297,12 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         ZamowienieHurtownia zH( sklepId, QDate::currentDate() );
         unsigned int lastId = dbH.dodaj( zH );
 
-        QString faktura = QString::number(hurtowniaId)+ "-" + QString::number( lastId );        //sklada sie z: idHurtowni-random
-        zH.nrFaktury = faktura;
 
-        ZamowienieSklep zS( hurtowniaId, pracownikId, QDate::currentDate(), faktura );
+        QString identyfikacja = QString::number(hurtowniaId)+ "-" + QString::number( lastId );        //sklada sie z: idHurtowni-idZamowienia
+        zH.identyfikacja = identyfikacja;
+
+        ZamowienieSklep zS( hurtowniaId, pracownikId, QDate::currentDate(), QString() );
+        zS.identyfikacja = identyfikacja;
         db.dodaj( zS );
 
         zH.upust = upust;
@@ -300,7 +322,6 @@ void Magazynier::on_pushButton_clicked()    //zloz zamowienie
         ui->widokWybraneTowary_2->setModel( &model_2 );
 
         pobierzZamowienia( dbH.pobierz< ZamowienieHurtownia >() ); //odswieza liste w drugim tabie
-        // uaktualnij()  //uaktualnia ilosc towarow
     }
 }
 
@@ -404,6 +425,8 @@ void Magazynier::on_buttonPokazWszystkich_clicked()
          model_3.setItem( i, 3, new QStandardItem( DBProxy::dataNaString( zH[i].dataRealizacji ) ) );
          model_3.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( zH[i].upust ) ) );
          model_3.setItem( i, 5, new QStandardItem( DBProxy::statusNaString( zH[i].status ) ) );
+
+         qDebug() << zH[i].id << "IDENTYFIKACJA " << zH[i].identyfikacja.toLatin1();
      }
 
      model_3.setHeaderData( 0, Qt::Horizontal, "Id" );
@@ -460,7 +483,6 @@ void Magazynier::on_buttonPokazWszystkich_clicked()
     zzz.append(  dbH.pobierz< ZamowienieHurtownia >( ZamowienieHurtownia::Id, Filtr( i ) ).first() );
 
     zamowienieH = &zzz.first();
-    qDebug() << zamowienieH->nrFaktury;
 
     FiltrPozycjaZamowienia filtrPZ;
     FiltrTowarHurtownia filtrTH;
@@ -537,9 +559,6 @@ void Magazynier::on_buttonPokazWszystkich_clicked()
     }
     ui->lineEdit_3->setText( DBProxy::liczbaNaString( suma ).append( " z³" ));
     ui->lineEdit_3->setReadOnly( true );
-
-
-    qDebug() << "heh      "<<zamowienieH->nrFaktury;
  }
 
 
@@ -549,8 +568,6 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
     QList< TowarSklep > towaryTS;                   //stara lista towarow sklepu
     towaryTS = db.pobierz< TowarSklep >();
     QListIterator< TowarSklep > itTS( towaryTS );   // iterator starych towarow
-
-    qDebug() << "heh      "<<zamowienieH->nrFaktury;
 
     foreach ( TowarSklep tS, towaryS)               //dodawanie towarow do bazy sklepu
     {
@@ -585,13 +602,15 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
         }
     }
 
-    //zamowienieH->status = DBProxy::Zrealizowane;        //zmiana statusu w hurtowni
+    zamowienieH->status = DBProxy::Zrealizowane;        //zmiana statusu w hurtowni
 
     zamowienieH->dataRealizacji = QDate::currentDate(); //ustawianie daty w hurtowni
     dbH.uaktualnij( *zamowienieH );
 
-    ZamowienieSklep zamowienieS = db.pobierz< ZamowienieSklep >( ZamowienieSklep::NrFaktury, Filtr( zamowienieH->nrFaktury ) ).first();
-    //zamowienieS.status = DBProxy::Zrealizowane;
+    qDebug()<< "zamowienieH->identyfikacja  " <<zamowienieH->identyfikacja ;
+
+    ZamowienieSklep zamowienieS = db.pobierz< ZamowienieSklep >( ZamowienieSklep::Identyfikacja, Filtr( zamowienieH->identyfikacja ) ).first();
+    zamowienieS.status = DBProxy::Zrealizowane;
     zamowienieS.dataRealizacji = QDate::currentDate();
     db.uaktualnij( zamowienieS );
     pobierzZamowienia( zamowieniaH );        //odswiezanie listy zamowien
@@ -599,22 +618,65 @@ void Magazynier::on_pushButton_2_clicked()          //realizacja
 }
 
 
-void Magazynier::on_buttonFiltrKat_2_clicked()
+void Magazynier::on_buttonFiltrKat_2_clicked()      //filtrowanie
 {
-    if ( ui->comboBoxFiltr_2->currentText() != "Wszystkie" )
+    model_4.clear();
+    ui->lineEdit_3->clear();
+
+    if ( ! ( ui->wszystkieRadioButton->isChecked() && ui->comboBoxFiltr_2->currentText() == "Wszystkie" ) )
     {
         QList< ZamowienieHurtownia >lista;
-        foreach( ZamowienieHurtownia zam, zamowieniaH ){
 
-            if ( DBProxy::statusNaString( zam.status ) == ui->comboBoxFiltr_2->currentText() ){
-                lista.append( zam );
+        FiltrZamowienieHurtownia filtr;
+
+        if ( ui->comboBoxFiltr_2->currentText() != "Wszystkie" )
+            filtr.insert( ZamowienieHurtownia::Status, DBProxy::Filtr( DBProxy::stringNaStatus( ui->comboBoxFiltr_2->currentText() ) ) );
+
+
+        if( ui->okresRadioButton->isChecked() ) {
+            qDebug() << "Filtr 1";
+            odDate = ui->odDateEdit->date();
+            doDate = ui->doDateEdit->date();
+
+            if( odDate > doDate ) {
+                QDate temp = odDate;
+                odDate = doDate;
+                doDate = temp;
+
+                ui->doDateEdit->setDate( doDate );
+                ui->odDateEdit->setDate( odDate );
             }
+            filtr.insert( ZamowienieHurtownia::DataZlozenia, Filtr( odDate, DBProxy::WiekszeRowne ) );
+            filtr.insert( ZamowienieHurtownia::DataZlozenia, Filtr( doDate, DBProxy::MniejszeRowne ) );
+
+        } else if( ui->ostatnieRadioButton->isChecked() ) {
+            int ilosc = ui->iloscSpinBox->value();
+
+            doDate = QDate::currentDate();
+
+            if( ui->comboBox->currentText() == "dni" ) {
+                odDate = QDate::currentDate().addDays( -1 * ilosc );
+            } else if( ui->comboBox->currentText() == "tygodni" ) {
+                odDate = QDate::currentDate().addDays( -7 * ilosc );
+            } else {
+                odDate = QDate::currentDate().addMonths( -1 * ilosc );
+            }
+            filtr.insert( ZamowienieHurtownia::DataZlozenia, Filtr( odDate, DBProxy::WiekszeRowne ) );
+            filtr.insert( ZamowienieHurtownia::DataZlozenia, Filtr( doDate, DBProxy::MniejszeRowne ) );
         }
+
+        lista = dbH.pobierz< ZamowienieHurtownia >(filtr);
+
         pobierzZamowienia( lista );
     }
     else
-         pobierzZamowienia( zamowieniaH );
+        pobierzZamowienia( zamowieniaH );
 }
+
+
+
+
+
 
 
 
@@ -754,7 +816,7 @@ void Magazynier::on_buttonFiltrKat_3_clicked()
 {
     QList< TowarSklep >lista;
     Kategoria k = db.pobierz< Kategoria >( Kategoria::Nazwa, Filtr( ui->comboBoxFiltr_3->currentText() ) ).first();
-    qDebug() << k.nazwa;
+
     lista = db.pobierz< TowarSklep >( DBProxy::TowarSklep::IdKategorii, Filtr( k.id ) );
 
     pobierzTowary( lista );
